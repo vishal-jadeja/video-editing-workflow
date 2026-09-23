@@ -1,0 +1,17 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {execFileSync,spawnSync} from 'node:child_process';
+const episode=JSON.parse(await readFile('src/generated/episode.json','utf8'));
+const timeline=JSON.parse(await readFile('src/generated/timeline.json','utf8'));
+const file=`out/${episode.slug}.mp4`;
+const info=JSON.parse(execFileSync('ffprobe',['-v','error','-show_streams','-show_format','-of','json',file],{encoding:'utf8'}));
+const v=info.streams.find(s=>s.codec_type==='video'),a=info.streams.find(s=>s.codec_type==='audio');
+if(v.width!==1080||v.height!==1920||v.codec_name!=='h264'||v.r_frame_rate!=='30/1'||v.pix_fmt!=='yuv420p'||a?.codec_name!=='aac')throw Error('Export format mismatch');
+if(Math.abs(Number(info.format.duration)-timeline.duration)>.1)throw Error('Duration mismatch');
+if(Number(v.nb_frames)!==timeline.frames)throw Error('Frame count mismatch');
+const measure=spawnSync('ffmpeg',['-hide_banner','-i',file,'-af','loudnorm=I=-14:TP=-1.5:LRA=7:print_format=json','-vn','-f','null','-'],{encoding:'utf8'});
+if(measure.status!==0)throw Error(measure.stderr);
+const audio=JSON.parse(measure.stderr.slice(measure.stderr.lastIndexOf('{'),measure.stderr.lastIndexOf('}')+1));
+if(Math.abs(Number(audio.input_i)+14)>.6||Number(audio.input_tp)>-1)throw Error('Final encoded audio is outside loudness/peak target');
+execFileSync('ffmpeg',['-v','error','-i',file,'-f','null','-']);
+await writeFile('out/validation.json',JSON.stringify({file,passed:true,video:{width:v.width,height:v.height,codec:v.codec_name,pixelFormat:v.pix_fmt,fps:v.r_frame_rate,frames:v.nb_frames},audio:{codec:a.codec_name,sampleRate:a.sample_rate,channels:a.channels,integratedLUFS:audio.input_i,truePeakDBTP:audio.input_tp},duration:info.format.duration,size:info.format.size},null,2));
+console.log(await readFile('out/validation.json','utf8'));

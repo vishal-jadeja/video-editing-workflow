@@ -1,0 +1,11 @@
+{
+  "name": "dsa-video-workflows",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "shorts": "node workflows/shorts/cli.mjs",
+    "test": "node --test workflows/shorts/test/*.test.mjs"
+  }
+}

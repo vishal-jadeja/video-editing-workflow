@@ -1,0 +1,22 @@
+{
+  "part":1,"title":"Contains Duplicate","difficulty":"EASY","slug":"part-01-contains-duplicate",
+  "array":[1,2,3,1],"earlyArray":[1,1,2,3,"…",100000],
+  "layouts": {
+    "hook":[{"at":"start","mode":"overlay"},{"at":"wall","mode":"graphics"}],
+    "problem":[{"at":"start","mode":"facecam"},{"at":"example","mode":"split"}],
+    "brute":[{"at":"start","mode":"graphics"}],
+    "better":[{"at":"start","mode":"split"},{"at":"neighbours","mode":"graphics"}],
+    "one":[{"at":"start","mode":"overlay"},{"at":"scan","mode":"graphics"}],
+    "optimal":[{"at":"start","mode":"split"},{"at":"first","mode":"graphics"}],
+    "cta":[{"at":"start","mode":"facecam"}]
+  },
+  "scenes":[
+    {"id":"hook","voice":"Can you spot the duplicate? Easy. Now do it for one hundred thousand numbers, fast.","cues":{"duplicate":"duplicate","wall":"one hundred thousand"}},
+    {"id":"problem","voice":"NeetCode one fifty, Part one: Contains Duplicate. Given an array, return true if any number appears twice, and false if every number is unique.","cues":{"example":"Given an array","true":"true","twice":"twice","false":"false","unique":"unique"}},
+    {"id":"brute","label":"brute force","color":"#F2555A","time":"O(n²)","space":"O(1)","voice":"Brute force: compare every number with every other number. It works, but it takes O of n squared time. With one hundred thousand numbers, that's billions of checks.","cues":{"compare":"compare","other":"other number","found":"It works","complexity":"O of n squared","scale":"one hundred thousand","billions":"billions of checks"},"code":"def containsDuplicate(nums):\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] == nums[j]:\n                return True\n    return False"},
+    {"id":"better","label":"better","color":"#F5B942","time":"O(n log n)","space":"O(n)","voice":"Better: sort the array first. Duplicates end up next to each other, so you only compare neighbours. That brings it down to O of n log n.","cues":{"sort":"sort","sorted":"first","duplicate":"Duplicates","neighbours":"neighbours","complexity":"O of n log n"},"code":"def containsDuplicate(nums):\n    sorted_nums = sorted(nums)\n    for i in range(1, len(sorted_nums)):\n        if sorted_nums[i] == sorted_nums[i - 1]:\n            return True\n    return False"},
+    {"id":"one","label":"the one-liner","color":"#E6E8EB","time":"O(n)","space":"O(n)","voice":"There's also a one-liner: turn the array into a set and compare the lengths. A set drops duplicates, so if the length shrinks, there was a repeat. It's O of n, but it always processes the whole array. Even if the duplicate is right at the start, it still goes through all one hundred thousand numbers.","cues":{"set":"into a set","lengths":"compare the lengths","drops":"drops duplicates","shrinks":"shrinks","repeat":"repeat","complexity":"O of n","scan":"always processes","whole":"whole array","early":"right at the start","end":"all one hundred thousand numbers"},"code":"def containsDuplicate(nums):\n    return len(set(nums)) != len(nums)"},
+    {"id":"optimal","label":"optimal","color":"#3DDC84","time":"O(n)","space":"O(n)","voice":"The optimal version fixes that with a hash set and an early exit. Go through the array one number at a time. If the number is already in the set, return true immediately. If not, add it. It's still O of n in the worst case, but it stops the moment it finds a duplicate.","cues":{"set":"hash set","exit":"early exit","first":"one number at a time","second":"already in the set","return":"return true","immediately":"immediately","add":"add it","complexity":"O of n","worst":"worst case","stop":"stops","duplicate":"duplicate"},"code":"def containsDuplicate(nums):\n    seen = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False"},
+    {"id":"cta","voice":"Follow for Part two of NeetCode one fifty.","cues":{"follow":"Follow","part":"Part two"}}
+  ]
+}

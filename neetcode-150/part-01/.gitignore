@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.venv/
+.cache/
+out/
+public/audio/
+public/media/
+assets/facecam.mp4
+public/fonts/
+src/generated/
+assets/sfx/events.json

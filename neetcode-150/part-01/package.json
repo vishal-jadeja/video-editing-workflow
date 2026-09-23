@@ -1,0 +1,18 @@
+{
+  "name": "neetcode-150-video", "version": "1.0.0", "private": true, "type": "module",
+  "scripts": {
+    "studio": "node scripts/facecam.mjs && remotion studio src/index.ts",
+    "prepare": "node scripts/prepare.mjs",
+    "voice:local": "node scripts/voice.mjs local",
+    "voice:openai": "node scripts/voice.mjs openai",
+    "mix": "node scripts/mix.mjs",
+    "check": "node scripts/facecam.mjs && tsc --noEmit",
+    "facecam": "node scripts/facecam.mjs",
+    "stills": "node scripts/render.mjs stills",
+    "render": "node scripts/render.mjs video",
+    "cover": "node scripts/render.mjs cover",
+    "validate": "node scripts/validate.mjs"
+  },
+  "dependencies": {"@remotion/cli":"4.0.527","@remotion/bundler":"4.0.527","@remotion/renderer":"4.0.527","remotion":"4.0.527","react":"19.1.0","react-dom":"19.1.0"},
+  "devDependencies": {"typescript":"5.9.3","@types/react":"19.1.0","@types/node":"22.19.0"}
+}
