@@ -5,9 +5,14 @@ node_modules/
 .venv/
 .cache/
 out/
-public/audio/
-public/media/
-assets/facecam.mp4
-public/fonts/
+# Prepared audio, copied footage/avatar, and downloaded fonts.
+public/
+# Optional local recordings and portrait; placeholders work without them.
+assets/**/*.mp4
+assets/**/*.mov
+assets/**/*.MOV
+assets/**/*.m4v
+assets/**/*.webm
+assets/avatar.png
 src/generated/
 assets/sfx/events.json

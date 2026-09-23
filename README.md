@@ -261,7 +261,7 @@ Only one workflow may mutate a renderer project at a time. Avoid editing inputs 
 
 Run `npm test` for input validation, duration gates, stage ordering, failure reporting, locking, and placeholder policy. No media dependencies are needed for these tests. For renderer changes, run a real preview/build and inspect the outputs as well.
 
-Generated exports, audio/media caches, fonts, virtual environments, dependencies, and the default face-cam recording are excluded from Git. Commit source inputs and code; keep additional raw recordings out of version control as appropriate.
+Generated exports, prepared public assets, fonts, virtual environments, dependencies, optional local portraits/recordings, and the unused root-level `neetcode-*.png` reference artwork are excluded from Git. The recording rules cover MP4, MOV, M4V, and WebM files under the renderer's `assets/` directory. Commit source inputs and code; add ignore rules for other local recording formats or locations when needed.
 
 Add long-video production under `workflows/long/` when its requirements are ready. Give it its own renderer/output directory, aspect ratio, chapter structure, duration policy, and validation. Shared orchestration can be extracted once both workflows have concrete needs.
 

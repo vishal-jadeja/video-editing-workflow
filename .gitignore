@@ -6,3 +6,9 @@ node_modules/
 __pycache__/
 *.pyc
 .shorts-workflow.lock/
+
+# Reference artwork from the original edit; not consumed by the renderer.
+/neetcode-*.png
+
+# Optional local portrait (the renderer also supports a placeholder).
+/assets/avatar.png
