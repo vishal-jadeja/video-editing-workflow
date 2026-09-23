@@ -14,6 +14,7 @@ The included episode is **NeetCode 150 — Part 1: Contains Duplicate**. It expo
 - [Configure a video](#configure-a-video)
 - [Narration and browser settings](#narration-and-browser-settings)
 - [Review and outputs](#review-and-outputs)
+- [Cleanup after a video](#cleanup-after-a-video)
 - [Troubleshooting](#troubleshooting)
 - [Development and future workflows](#development-and-future-workflows)
 
@@ -38,9 +39,9 @@ git clone https://github.com/vishal-jadeja/video-editing-workflow.git
 cd video-editing-workflow
 
 # Install dependencies in the renderer project.
-npm ci --prefix neetcode-150/part-01
-python3 -m venv neetcode-150/part-01/.venv
-neetcode-150/part-01/.venv/bin/pip install -r neetcode-150/part-01/requirements.txt
+npm ci --prefix shorts/neetcode-150/part-01
+python3 -m venv shorts/neetcode-150/part-01/.venv
+shorts/neetcode-150/part-01/.venv/bin/pip install -r shorts/neetcode-150/part-01/requirements.txt
 
 # Validate the episode, then check local dependencies.
 npm run shorts -- plan
@@ -66,7 +67,7 @@ You can run `build` directly; a separate `preview` run is optional. The first me
 The default video is written to:
 
 ```text
-neetcode-150/part-01/out/part-01-contains-duplicate.mp4
+shorts/neetcode-150/part-01/out/part-01-contains-duplicate.mp4
 ```
 
 ## What each command does
@@ -77,6 +78,7 @@ neetcode-150/part-01/out/part-01-contains-duplicate.mp4
 | `npm run shorts -- doctor` | Validates inputs and checks dependencies, browser executable, and narration prerequisites | No |
 | `npm run shorts -- preview` | Runs preflight, prepares assets, generates and aligns narration, checks duration/camera policy, typechecks, mixes audio, and exports review stills and cover | Yes; no final MP4 |
 | `npm run shorts -- build` | Runs the preview stages, renders the final MP4, and validates the encoded export | Yes, including MP4 |
+| `npm run shorts -- cleanup` | Lists removable intermediate files and checks cleanup eligibility; add `--apply` to delete them after a successful build | No |
 | `npm run shorts -- --help` | Prints CLI usage | No |
 | `npm test` | Runs workflow tests without generating video | No |
 
@@ -113,7 +115,7 @@ The default job is [workflows/shorts/default.json](workflows/shorts/default.json
 {
   "version": 1,
   "format": "shorts",
-  "project": "../../neetcode-150/part-01",
+  "project": "../../shorts/neetcode-150/part-01",
   "episode": "data/part-01.json",
   "facecam": "data/facecam.json",
   "provider": "local",
@@ -150,7 +152,7 @@ The `--config` argument is relative to your shell's current directory. The workf
 
 ### Edit the script and graphics
 
-Edit [data/part-01.json](neetcode-150/part-01/data/part-01.json) for narration, code, complexity labels, cue phrases, and layouts. Its scenes run in this order:
+Edit [data/part-01.json](shorts/neetcode-150/part-01/data/part-01.json) for narration, code, complexity labels, cue phrases, and layouts. Its scenes run in this order:
 
 `hook → problem → brute → better → one → optimal → cta`
 
@@ -160,9 +162,9 @@ The renderer currently assumes `[1,2,3,1]` and `[1,1,2,3,"…",100000]`; the wor
 
 ### Add face-cam footage
 
-Place a recording at `neetcode-150/part-01/assets/facecam.mp4`, then adjust [data/facecam.json](neetcode-150/part-01/data/facecam.json). Before a final camera edition, set `allowPlaceholderFacecam` to `false` in the workflow config.
+Place a recording at `shorts/neetcode-150/part-01/assets/facecam.mp4`, then adjust [data/facecam.json](shorts/neetcode-150/part-01/data/facecam.json). Before a final camera edition, set `allowPlaceholderFacecam` to `false` in the workflow config.
 
-Footage is cropped and trimmed to the existing edit. Its audio is muted; generated narration remains the master audio. Separate takes, crop controls, and recording timing are documented in [FACECAM.md](neetcode-150/part-01/FACECAM.md). Explicitly configured missing scene-override files fail even when placeholders are allowed.
+Footage is cropped and trimmed to the existing edit. Its audio is muted; generated narration remains the master audio. Separate takes, crop controls, and recording timing are documented in [FACECAM.md](shorts/neetcode-150/part-01/FACECAM.md). Explicitly configured missing scene-override files fail even when placeholders are allowed.
 
 For a graphics-only video, set every scene's layout to `[{"at":"start","mode":"graphics"}]`.
 
@@ -189,7 +191,7 @@ For OpenAI narration, set `"provider": "openai"` in your chosen workflow config 
 After `preview`, inspect the images in `out/qa/` and the cover. For motion and audio review, launch Remotion Studio from the renderer directory:
 
 ```sh
-cd neetcode-150/part-01
+cd shorts/neetcode-150/part-01
 npm run studio
 ```
 
@@ -213,17 +215,54 @@ All paths below are relative to the renderer project:
 | `out/shorts-workflow.json` | Latest production run's stages, statuses, timestamps, and failure message |
 | `out/validation.json` | Latest successful export's format and audio measurements |
 | `out/facecam-edit-plan.json` | Resolved camera/layout cuts |
+| `out/cleanup.json` | Last applied cleanup's selected/removed files, sizes, status, and errors |
 | `src/generated/` | Episode, timeline, camera, and asset manifests used by the renderer |
 
 A successful preview reports `preview-ready`. Only a successful full build reports `passed`. A failed stage reports `failed` and exits nonzero. Input/preflight errors occur before the production report is created, so check the terminal output too.
 
 Watch the final MP4 before publishing, including captions, code, voice timing, and camera crops. Review images only sample the timeline. Suggested narration disclosure: “AI-generated narration.”
 
+## Cleanup after a video
+
+Run cleanup after a successful `build`. The default command is a dry run: it lists files and estimated space without deleting media.
+
+```sh
+npm run shorts -- cleanup
+npm run shorts -- cleanup --apply
+```
+
+| Removed by cleanup | Preserved |
+| --- | --- |
+| Scene `.aiff` intermediates and generated narration `.txt` files | Scene `.wav` narration, cache signatures, and word alignment |
+| `voice.wav`, `premix.wav`, `sfx.wav`, and any `mix-corrected.wav` temporary file | Final `mix.wav`, fonts, Whisper models, copied face-cam media, and generated timeline |
+| With `--include-review`: generated `frame-*.png` and `camera-test-*.png` review samples | Final MP4s, covers, build/validation reports, source files, recordings, and reference artwork |
+
+To also remove review samples after inspecting the final video:
+
+```sh
+npm run shorts -- cleanup --include-review
+npm run shorts -- cleanup --include-review --apply
+```
+
+Only review filenames produced by the renderer are selected; other images in `out/qa/` remain. The workflow uses a fixed list of intermediate files and never recursively deletes directories. It preserves files configured as camera sources and rejects symbolic links along deletion paths.
+
+For a custom job, supply the same `--config` used for its build. Cleanup requires the latest production report to identify a successful build of that episode, a successful export validation record, and an existing MP4 with the recorded size. This checks the saved validation result; it does not re-encode or checksum the video. A newer preview or failed build blocks deletion until you run `build` successfully again.
+
+Cleanup shares the project lock with builds, writes `out/cleanup.json` when applied, and can be repeated when eligible. It needs no browser, speech API, or media dependencies. Retained narration and alignment avoid new speech charges for unchanged inputs; removed intermediates regenerate during the next build. Studio remains usable with the preserved media. As with builds, do not mutate project files from another process during cleanup.
+
+To generate and then clean intermediates in a single shell sequence:
+
+```sh
+npm run shorts -- build && npm run shorts -- cleanup --apply
+```
+
+Cleanup is explicit; `build` alone retains its intermediates.
+
 ## Troubleshooting
 
 | Symptom | Action |
 | --- | --- |
-| Missing Node dependencies | Run `npm ci --prefix neetcode-150/part-01` from the repository root |
+| Missing Node dependencies | Run `npm ci --prefix shorts/neetcode-150/part-01` from the repository root |
 | Python imports fail | Install `requirements.txt` using the renderer's `.venv/bin/pip` |
 | `ffmpeg` or `ffprobe` unavailable | Install them and ensure both executables are on `PATH` |
 | Daniel voice unavailable | Install Daniel in macOS speech settings, or configure OpenAI narration |
@@ -234,6 +273,7 @@ Watch the final MP4 before publishing, including captions, code, voice timing, a
 | Narration exceeds the duration budget | Shorten the script or deliberately increase `maxDurationSeconds` |
 | Missing or too-short face-cam footage | Supply a sufficient recording or adjust trims; see the face-cam guide |
 | A project lock already exists | Check `.shorts-workflow.lock/owner.json` and confirm the owning run has stopped before removing the lock directory |
+| Cleanup requires a successful build | Use the same config as the export and run `build`; a preview or failed run is not eligible |
 
 Fix the cause, then rerun the same command. There is no resume or stage-skipping flag. Unchanged speech and alignment are cached, while downstream outputs are rebuilt. Changing script, provider, voice, or model changes the narration cache identity.
 
@@ -247,10 +287,11 @@ Only one workflow may mutate a renderer project at a time. Avoid editing inputs 
 ├── workflows/shorts/
 │   ├── cli.mjs                     # Command parsing and preflight dispatch
 │   ├── workflow.mjs                # Validation, gates, locking, and reports
+│   ├── cleanup.mjs                 # Bounded intermediate-file cleanup
 │   ├── default.json                # Default short-video job
 │   ├── test/workflow.test.mjs       # Workflow behavior tests
 │   └── README.md                   # Detailed production guide
-└── neetcode-150/part-01/
+└── shorts/neetcode-150/part-01/
     ├── data/                       # Editable episode and camera inputs
     ├── src/                        # Remotion/React video and scene components
     ├── scripts/                    # Narration, alignment, mixing, and export
@@ -259,10 +300,10 @@ Only one workflow may mutate a renderer project at a time. Avoid editing inputs 
     └── out/                        # Generated exports and reports
 ```
 
-Run `npm test` for input validation, duration gates, stage ordering, failure reporting, locking, and placeholder policy. No media dependencies are needed for these tests. For renderer changes, run a real preview/build and inspect the outputs as well.
+Run `npm test` for input validation, duration gates, stage ordering, failure reporting, locking, placeholder policy, and cleanup preservation/deletion behavior. No media dependencies are needed for these tests. For renderer changes, run a real preview/build and inspect the outputs as well.
 
 Generated exports, prepared public assets, fonts, virtual environments, dependencies, optional local portraits/recordings, and the unused root-level `neetcode-*.png` reference artwork are excluded from Git. The recording rules cover MP4, MOV, M4V, and WebM files under the renderer's `assets/` directory. Commit source inputs and code; add ignore rules for other local recording formats or locations when needed.
 
 Add long-video production under `workflows/long/` when its requirements are ready. Give it its own renderer/output directory, aspect ratio, chapter structure, duration policy, and validation. Shared orchestration can be extracted once both workflows have concrete needs.
 
-Further reading: [production guide](workflows/shorts/README.md), [renderer details](neetcode-150/part-01/README.md), [face-cam setup](neetcode-150/part-01/FACECAM.md), and [audio/asset credits](neetcode-150/part-01/assets/sfx/CREDITS.md).
+Further reading: [production guide](workflows/shorts/README.md), [renderer details](shorts/neetcode-150/part-01/README.md), [face-cam setup](shorts/neetcode-150/part-01/FACECAM.md), and [audio/asset credits](shorts/neetcode-150/part-01/assets/sfx/CREDITS.md).

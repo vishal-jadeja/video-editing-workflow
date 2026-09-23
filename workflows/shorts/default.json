@@ -1,7 +1,7 @@
 {
   "version": 1,
   "format": "shorts",
-  "project": "../../neetcode-150/part-01",
+  "project": "../../shorts/neetcode-150/part-01",
   "episode": "data/part-01.json",
   "facecam": "data/facecam.json",
   "provider": "local",

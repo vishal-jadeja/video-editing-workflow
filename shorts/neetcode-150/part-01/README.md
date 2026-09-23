@@ -1,6 +1,6 @@
 # NeetCode 150 — Part 1
 
-For the automated plan/preflight/preview/build commands, start with the [short-video workflow](../../workflows/shorts/README.md). The commands below remain available for individual production steps.
+For the automated plan/preflight/preview/build commands, start with the [short-video workflow](../../../workflows/shorts/README.md). The commands below remain available for individual production steps.
 
 **Current export: face-cam edition.** Four cue-driven layouts combine full face cam, face cam with overlays, stacked split screens and full motion graphics. See [FACECAM.md](FACECAM.md) to add a recording, trim/crop it, use separate takes, or change the scene layouts. With no recording the camera uses silhouette placeholders. The preceding full-graphics export is preserved at `out/part-01-contains-duplicate-graphics-only.mp4`.
 

@@ -9,11 +9,11 @@ The workflow connects the existing Remotion project into a repeatable pipeline:
 Use Node 22+, Python 3.10+, ffmpeg/ffprobe and a Chromium browser. Install the renderer and alignment dependencies from the repository root:
 
 ```sh
-npm ci --prefix neetcode-150/part-01
-cd neetcode-150/part-01
+npm ci --prefix shorts/neetcode-150/part-01
+cd shorts/neetcode-150/part-01
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-cd ../..
+cd ../../..
 npm run shorts -- doctor
 ```
 
@@ -51,7 +51,7 @@ Copy [default.json](default.json) beside it and edit its paths/settings, then pa
 
 The 90-second budget is a project choice, not a platform eligibility claim. Shorten the narration if the duration gate fails, or deliberately change the budget. The workflow does not truncate speech.
 
-For a camera edition, supply footage and set `allowPlaceholderFacecam` to `false` before the final build. See [FACECAM.md](../../neetcode-150/part-01/FACECAM.md) for takes, trimming and crops. Footage paths inside that JSON are relative to the renderer directory. Camera audio remains muted; generated narration is the master audio. For a graphics-only edit, set every scene's layout to `graphics`.
+For a camera edition, supply footage and set `allowPlaceholderFacecam` to `false` before the final build. See [FACECAM.md](../../shorts/neetcode-150/part-01/FACECAM.md) for takes, trimming and crops. Footage paths inside that JSON are relative to the renderer directory. Camera audio remains muted; generated narration is the master audio. For a graphics-only edit, set every scene's layout to `graphics`.
 
 ## 3. Plan and preview
 
@@ -65,10 +65,10 @@ npm run shorts -- preview
 
 `plan` checks configuration and episode data without changing media. `doctor` also checks dependencies, the browser and the narration provider. `preview` prepares assets, generates and aligns narration, enforces duration and camera settings, typechecks the renderer, mixes audio and exports review images plus the cover.
 
-Review `neetcode-150/part-01/out/qa/` and the cover for caption readability, code correctness, safe areas and camera crops. For motion and audio review, launch the existing studio after preview:
+Review `shorts/neetcode-150/part-01/out/qa/` and the cover for caption readability, code correctness, safe areas and camera crops. For motion and audio review, launch the existing studio after preview:
 
 ```sh
-cd neetcode-150/part-01
+cd shorts/neetcode-150/part-01
 npm run studio
 ```
 
@@ -88,6 +88,19 @@ Build repeats the pipeline using available caches, renders video and runs the ex
 - `shorts-workflow.json`: stage statuses, timestamps and any failure.
 
 Only a successful `build` report means this workflow completed export validation. A preview report says `preview-ready`, never `passed`. Watch the finished MP4 before uploading. Publishing is manual; include the existing suggested disclosure, “AI-generated narration,” when appropriate.
+
+## 5. Clean intermediate files
+
+After a successful build, preview cleanup and then apply it:
+
+```sh
+npm run shorts -- cleanup
+npm run shorts -- cleanup --apply
+```
+
+This removes scene AIFF/text intermediates and temporary audio mixes, preserving final exports, covers, reports, narration/word caches, fonts, models, footage, and source files. Add `--include-review` to select generated review frames too. Use the same `--config` argument as the build for custom jobs.
+
+Cleanup is separate from `build`. It requires the latest run to be a validated build of the selected episode and verifies that the exported MP4 still exists with the recorded size. It shares the build lock and writes `out/cleanup.json` when applied. See the [cleanup guide](../../README.md#cleanup-after-a-video) for exact targets, retained files, and behavior after a newer preview or failed run.
 
 ## Failures and repeat runs
 
