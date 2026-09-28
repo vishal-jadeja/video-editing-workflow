@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "slug": "review-e2e",
+  "preset": "clean-tech",
+  "platform": "shorts",
+  "width": 1280,
+  "height": 720,
+  "fps": 30,
+  "durationFrames": 180,
+  "seed": "review-e2e",
+  "audio": {
+    "mode": "preserve",
+    "targetLufs": -14,
+    "sfx": []
+  },
+  "assets": [],
+  "rules": {},
+  "needsInput": [],
+  "cues": [
+    {
+      "id": "cue-hook",
+      "component": "chapter-title",
+      "startFrame": 8,
+      "endFrame": 100,
+      "job": "emphasize",
+      "anchor": "top-right",
+      "box": {
+        "x": 0.39000000000000007,
+        "y": 0.14,
+        "w": 0.43,
+        "h": 0.27
+      },
+      "layer": 1,
+      "reason": "Hook: name the claim while it is spoken.",
+      "priority": 95,
+      "source": {
+        "kind": "transcript",
+        "reference": "This pipeline renders 40 percent faster"
+      },
+      "sync": {
+        "kind": "word",
+        "frame": 20
+      },
+      "allowAcrossCuts": false,
+      "props": {
+        "title": "40% faster",
+        "depth": false
+      }
+    }
+  ]
+}

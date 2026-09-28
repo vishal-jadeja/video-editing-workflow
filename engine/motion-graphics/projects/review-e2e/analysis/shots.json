@@ -1,0 +1,18 @@
+[
+  {
+    "id": "shot-0000",
+    "startFrame": 0,
+    "endFrame": 180,
+    "classification": "unknown",
+    "reviewed": false,
+    "motion": 0.015216640694343581,
+    "brightness": 0.49852288065843614,
+    "dominantColor": "#7b817d",
+    "negativeSpace": "left",
+    "keyframes": [
+      "analysis/keyframes/shot-0000-00000000.jpg",
+      "analysis/keyframes/shot-0000-00000089.jpg",
+      "analysis/keyframes/shot-0000-00000179.jpg"
+    ]
+  }
+]

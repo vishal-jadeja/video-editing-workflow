@@ -1,0 +1,31 @@
+{
+  "fonts": [
+    {
+      "family": "Inter",
+      "weight": 400,
+      "style": "normal",
+      "file": "inter-latin-400-normal.woff2",
+      "path": "public/fonts/inter-latin-400-normal.woff2",
+      "license": "SIL OFL 1.1"
+    },
+    {
+      "family": "DM Sans",
+      "weight": 400,
+      "style": "italic",
+      "file": "dm-sans-latin-400-italic.woff2",
+      "path": "public/fonts/dm-sans-latin-400-italic.woff2",
+      "license": "SIL OFL 1.1"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 400,
+      "style": "normal",
+      "file": "ibm-plex-mono-latin-400-normal.woff2",
+      "path": "public/fonts/ibm-plex-mono-latin-400-normal.woff2",
+      "license": "SIL OFL 1.1"
+    }
+  ],
+  "assets": [],
+  "sfx": [],
+  "source": "User-provided locked source; ownership and distribution rights remain with the user."
+}

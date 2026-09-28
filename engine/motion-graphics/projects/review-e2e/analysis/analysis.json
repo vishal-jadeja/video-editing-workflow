@@ -1,0 +1,255 @@
+{
+  "version": 1,
+  "source": {
+    "path": "/private/tmp/claude-501/-Users-vishalmac-Desktop-Temp-video-editing-workflow/f60dfa92-03af-46e4-8fe1-05eaf1f2e0b8/scratchpad/locked-test.mov",
+    "sha256": "1decfc13541abc27b30c747d806c5604d28f9417aa35d8e5840474ac5d0d018f",
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "fpsRational": "30/1",
+    "durationFrames": 180,
+    "durationSeconds": 6,
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "colorSpace": "unknown",
+    "colorTransfer": "unknown",
+    "colorPrimaries": "unknown",
+    "colorRange": "unknown",
+    "audioStreams": [
+      {
+        "index": 1,
+        "codec": "aac",
+        "channels": 1,
+        "sampleRate": 44100,
+        "startTime": 0
+      }
+    ],
+    "vfr": false,
+    "rotation": 0,
+    "sampleAspectRatio": "1:1",
+    "fieldOrder": "progressive",
+    "startTime": 0,
+    "warnings": [],
+    "loudness": {
+      "integrated": -22.03,
+      "truePeak": -17.22,
+      "lra": 0
+    }
+  },
+  "words": [
+    {
+      "text": "This",
+      "startFrame": 20,
+      "endFrame": 26,
+      "confidence": 0.95
+    },
+    {
+      "text": "pipeline",
+      "startFrame": 27,
+      "endFrame": 33,
+      "confidence": 0.95
+    },
+    {
+      "text": "renders",
+      "startFrame": 34,
+      "endFrame": 40,
+      "confidence": 0.95
+    },
+    {
+      "text": "40",
+      "startFrame": 41,
+      "endFrame": 47,
+      "confidence": 0.95
+    },
+    {
+      "text": "percent",
+      "startFrame": 48,
+      "endFrame": 54,
+      "confidence": 0.95
+    },
+    {
+      "text": "faster",
+      "startFrame": 55,
+      "endFrame": 61,
+      "confidence": 0.95
+    },
+    {
+      "text": "than",
+      "startFrame": 62,
+      "endFrame": 68,
+      "confidence": 0.95
+    },
+    {
+      "text": "the",
+      "startFrame": 69,
+      "endFrame": 75,
+      "confidence": 0.95
+    },
+    {
+      "text": "old",
+      "startFrame": 76,
+      "endFrame": 82,
+      "confidence": 0.95
+    },
+    {
+      "text": "one.",
+      "startFrame": 83,
+      "endFrame": 89,
+      "confidence": 0.95
+    },
+    {
+      "text": "Finally",
+      "startFrame": 120,
+      "endFrame": 125,
+      "confidence": 0.95
+    },
+    {
+      "text": "subscribe",
+      "startFrame": 126,
+      "endFrame": 131,
+      "confidence": 0.95
+    },
+    {
+      "text": "for",
+      "startFrame": 132,
+      "endFrame": 137,
+      "confidence": 0.95
+    },
+    {
+      "text": "the",
+      "startFrame": 138,
+      "endFrame": 143,
+      "confidence": 0.95
+    },
+    {
+      "text": "next",
+      "startFrame": 144,
+      "endFrame": 149,
+      "confidence": 0.95
+    },
+    {
+      "text": "build",
+      "startFrame": 150,
+      "endFrame": 155,
+      "confidence": 0.95
+    },
+    {
+      "text": "video.",
+      "startFrame": 156,
+      "endFrame": 161,
+      "confidence": 0.95
+    }
+  ],
+  "cuts": [
+    0,
+    180
+  ],
+  "beats": [
+    21,
+    37,
+    52,
+    67,
+    84,
+    100,
+    115,
+    132,
+    148,
+    164
+  ],
+  "onsets": [
+    2,
+    6,
+    10,
+    11,
+    14,
+    20,
+    26,
+    28,
+    31,
+    35,
+    37,
+    42,
+    43,
+    46,
+    51,
+    54,
+    57,
+    61,
+    63,
+    66,
+    69,
+    73,
+    75,
+    79,
+    81,
+    84,
+    90,
+    91,
+    94,
+    99,
+    102,
+    107,
+    108,
+    110,
+    111,
+    114,
+    119,
+    121,
+    125,
+    127,
+    130,
+    131,
+    134,
+    137,
+    142,
+    148,
+    153,
+    156,
+    160,
+    164,
+    167,
+    169,
+    175,
+    179
+  ],
+  "shots": [
+    {
+      "id": "shot-0000",
+      "startFrame": 0,
+      "endFrame": 180,
+      "classification": "unknown",
+      "reviewed": true,
+      "motion": 0.015216640694343581,
+      "brightness": 0.49852288065843614,
+      "dominantColor": "#7b817d",
+      "negativeSpace": "left",
+      "keyframes": [
+        "analysis/keyframes/shot-0000-00000000.jpg",
+        "analysis/keyframes/shot-0000-00000089.jpg",
+        "analysis/keyframes/shot-0000-00000179.jpg"
+      ]
+    }
+  ],
+  "regions": [
+    {
+      "shotId": "shot-0000",
+      "startFrame": 0,
+      "endFrame": 180,
+      "kind": "subject",
+      "box": {
+        "x": 0,
+        "y": 0.62,
+        "w": 0.4,
+        "h": 0.36
+      },
+      "confidence": 0.9,
+      "origin": "human"
+    }
+  ],
+  "loudness": {
+    "integrated": -22.03,
+    "truePeak": -17.22,
+    "lra": 0
+  },
+  "needsInput": []
+}

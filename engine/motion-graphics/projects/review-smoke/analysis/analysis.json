@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "source": {
+    "path": "/private/tmp/claude-501/-Users-vishalmac-Desktop-Temp-video-editing-workflow/f60dfa92-03af-46e4-8fe1-05eaf1f2e0b8/scratchpad/locked-test.mov",
+    "sha256": "1decfc13541abc27b30c747d806c5604d28f9417aa35d8e5840474ac5d0d018f",
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "fpsRational": "30/1",
+    "durationFrames": 180,
+    "durationSeconds": 6,
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "colorSpace": "unknown",
+    "colorTransfer": "unknown",
+    "colorPrimaries": "unknown",
+    "colorRange": "unknown",
+    "audioStreams": [
+      {
+        "index": 1,
+        "codec": "aac",
+        "channels": 1,
+        "sampleRate": 44100,
+        "startTime": 0
+      }
+    ],
+    "vfr": false,
+    "rotation": 0,
+    "sampleAspectRatio": "1:1",
+    "fieldOrder": "progressive",
+    "startTime": 0,
+    "warnings": [],
+    "loudness": {
+      "integrated": -22.03,
+      "truePeak": -17.22,
+      "lra": 0
+    }
+  },
+  "words": [],
+  "cuts": [
+    0,
+    180
+  ],
+  "beats": [
+    21,
+    37,
+    52,
+    67,
+    84,
+    100,
+    115,
+    132,
+    148,
+    164
+  ],
+  "onsets": [
+    2,
+    6,
+    10,
+    11,
+    14,
+    20,
+    26,
+    28,
+    31,
+    35,
+    37,
+    42,
+    43,
+    46,
+    51,
+    54,
+    57,
+    61,
+    63,
+    66,
+    69,
+    73,
+    75,
+    79,
+    81,
+    84,
+    90,
+    91,
+    94,
+    99,
+    102,
+    107,
+    108,
+    110,
+    111,
+    114,
+    119,
+    121,
+    125,
+    127,
+    130,
+    131,
+    134,
+    137,
+    142,
+    148,
+    153,
+    156,
+    160,
+    164,
+    167,
+    169,
+    175,
+    179
+  ],
+  "shots": [
+    {
+      "id": "shot-0000",
+      "startFrame": 0,
+      "endFrame": 180,
+      "classification": "unknown",
+      "reviewed": false,
+      "motion": 0.015216640694343581,
+      "brightness": 0.49852288065843614,
+      "dominantColor": "#7b817d",
+      "negativeSpace": "left",
+      "keyframes": [
+        "analysis/keyframes/shot-0000-00000000.jpg",
+        "analysis/keyframes/shot-0000-00000089.jpg",
+        "analysis/keyframes/shot-0000-00000179.jpg"
+      ]
+    }
+  ],
+  "regions": [
+    {
+      "shotId": "shot-0000",
+      "startFrame": 0,
+      "endFrame": 180,
+      "kind": "subject",
+      "box": {
+        "x": 0.052083333333333336,
+        "y": 0.05555555555555555,
+        "w": 0.8729166666666667,
+        "h": 0.9185185185185185
+      },
+      "confidence": 0.25,
+      "origin": "detector"
+    }
+  ],
+  "loudness": {
+    "integrated": -22.03,
+    "truePeak": -17.22,
+    "lra": 0
+  },
+  "needsInput": []
+}

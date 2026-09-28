@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "purpose": "User-requested generated review sample; not an approved production finishing job",
+  "approval": null,
+  "findings": [],
+  "video": {
+    "loudness": {
+      "integrated": null,
+      "truePeak": null,
+      "lra": null
+    },
+    "path": "/Users/vishalmac/Desktop/Temp/video-editing-workflow/projects/cinematic-sample/renders/cinematic-sample.mp4",
+    "sha256": "e2d0d8e0ffedb5a86acc254ded92902dcfb29f19f197fa263dda3e8ed0b1d4f3",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "fpsRational": "30/1",
+    "durationFrames": 300,
+    "durationSeconds": 10,
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "colorSpace": "bt709",
+    "colorTransfer": "unknown",
+    "colorPrimaries": "unknown",
+    "colorRange": "tv",
+    "audioStreams": [],
+    "vfr": false,
+    "rotation": 0,
+    "sampleAspectRatio": "1:1",
+    "fieldOrder": "progressive",
+    "startTime": 0,
+    "warnings": []
+  },
+  "alpha": {
+    "codec_name": "prores",
+    "pix_fmt": "yuva444p12le",
+    "duration": "10.000000",
+    "nb_frames": "300"
+  },
+  "files": {
+    "mp4": {
+      "path": "/Users/vishalmac/Desktop/Temp/video-editing-workflow/projects/cinematic-sample/renders/cinematic-sample.mp4",
+      "sha256": "e2d0d8e0ffedb5a86acc254ded92902dcfb29f19f197fa263dda3e8ed0b1d4f3"
+    },
+    "overlay": {
+      "path": "/Users/vishalmac/Desktop/Temp/video-editing-workflow/projects/cinematic-sample/renders/cinematic-overlay.mov",
+      "sha256": "30f1767e29cc2cb7f1a23c2af9354a288a3d42572095b4f9b20abf64203ef18d"
+    }
+  },
+  "visualReview": {
+    "method": "Assistant inspection of 18 decoded frames from the actual MP4, including cue entry/exit edges, hold midpoints, and intermediate animation frames. Full-resolution poster also inspected.",
+    "frames": [
+      0,
+      12,
+      19,
+      27,
+      60,
+      111,
+      115,
+      119,
+      120,
+      149,
+      209,
+      210,
+      217,
+      225,
+      255,
+      291,
+      295,
+      299
+    ],
+    "findings": "No observed text clipping, overlap, spelling errors, unsafe placement, or cue-edge jumps. Three-second clean interval retained. No faces or subject UI exist in the generated background.",
+    "limits": "Not a human full-speed watch-through or target-NLE import test."
+  },
+  "alphaPixelCheck": {
+    "minimum": 0,
+    "maximum": 65535,
+    "result": "Decoded alpha includes fully transparent pixels and visible graphics."
+  }
+}

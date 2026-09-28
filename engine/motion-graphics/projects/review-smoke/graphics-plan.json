@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "slug": "review-smoke",
+  "preset": "clean-tech",
+  "platform": "youtube",
+  "width": 1280,
+  "height": 720,
+  "fps": 30,
+  "durationFrames": 180,
+  "seed": "review-smoke",
+  "audio": {
+    "mode": "preserve",
+    "targetLufs": -14,
+    "sfx": []
+  },
+  "assets": [],
+  "rules": {},
+  "needsInput": [],
+  "cues": []
+}

@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "source": {
+    "path": "/Users/vishalmac/Desktop/Temp/video-editing-workflow/projects/cinematic-sample/media/locked-background.mp4",
+    "sha256": "68f4e03037846812f86ae8569ed0b9984bf98fbf8b7ca68be093bae14a517d18",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "fpsRational": "30/1",
+    "durationFrames": 300,
+    "durationSeconds": 10,
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "colorSpace": "bt709",
+    "colorTransfer": "unknown",
+    "colorPrimaries": "unknown",
+    "colorRange": "tv",
+    "audioStreams": [],
+    "vfr": false,
+    "rotation": 0,
+    "sampleAspectRatio": "1:1",
+    "fieldOrder": "progressive",
+    "startTime": 0,
+    "warnings": [],
+    "loudness": {
+      "integrated": null,
+      "truePeak": null,
+      "lra": null
+    }
+  },
+  "words": [],
+  "cuts": [
+    0,
+    300
+  ],
+  "beats": [],
+  "onsets": [],
+  "shots": [
+    {
+      "id": "shot-0000",
+      "startFrame": 0,
+      "endFrame": 300,
+      "classification": "b-roll",
+      "reviewed": true,
+      "motion": 0.0024649329025690685,
+      "brightness": 0.07227142187121763,
+      "dominantColor": "#15110d",
+      "negativeSpace": "left",
+      "keyframes": [
+        "analysis/keyframes/shot-0000-00000000.jpg",
+        "analysis/keyframes/shot-0000-00000149.jpg",
+        "analysis/keyframes/shot-0000-00000299.jpg"
+      ]
+    }
+  ],
+  "regions": [],
+  "loudness": {
+    "integrated": null,
+    "truePeak": null,
+    "lra": null
+  },
+  "needsInput": []
+}

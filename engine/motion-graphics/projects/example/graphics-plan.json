@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "slug": "example",
+  "preset": "clean-tech",
+  "platform": "youtube",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "durationFrames": 1800,
+  "seed": "example-tech-01",
+  "audio": {
+    "mode": "preserve",
+    "targetLufs": -14,
+    "sfx": []
+  },
+  "assets": [],
+  "rules": {},
+  "needsInput": [],
+  "cues": [
+    {
+      "id": "hook",
+      "startFrame": 30,
+      "endFrame": 180,
+      "component": "chapter-title",
+      "props": {
+        "title": "Build a smaller feedback loop",
+        "kicker": "THE DEV WORKFLOW",
+        "depth": true
+      },
+      "job": "navigate",
+      "anchor": "top-left",
+      "box": {
+        "x": 0.06,
+        "y": 0.08,
+        "w": 0.43,
+        "h": 0.32
+      },
+      "layer": 1,
+      "reason": "Orient the viewer around the central concept.",
+      "priority": 70,
+      "source": {
+        "kind": "brief",
+        "reference": "Hypothetical demo only: the names and measurements below are fictional sample content."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 30
+      },
+      "allowAcrossCuts": false
+    },
+    {
+      "id": "speaker",
+      "startFrame": 300,
+      "endFrame": 450,
+      "component": "lower-third",
+      "props": {
+        "name": "Alex Morgan",
+        "title": "Developer \u00b7 fictional demo",
+        "variant": "speaker"
+      },
+      "job": "identify",
+      "anchor": "top-left",
+      "box": {
+        "x": 0.06,
+        "y": 0.67,
+        "w": 0.43,
+        "h": 0.25
+      },
+      "layer": 1,
+      "reason": "Identify the fictional speaker on first appearance.",
+      "priority": 70,
+      "source": {
+        "kind": "brief",
+        "reference": "Hypothetical demo only: the names and measurements below are fictional sample content."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 300
+      },
+      "allowAcrossCuts": false
+    },
+    {
+      "id": "stat",
+      "startFrame": 600,
+      "endFrame": 810,
+      "component": "counter",
+      "props": {
+        "from": 0,
+        "to": 3,
+        "decimals": 0,
+        "prefix": "",
+        "suffix": " steps",
+        "label": "One repeatable workflow"
+      },
+      "job": "clarify",
+      "anchor": "top-left",
+      "box": {
+        "x": 0.06,
+        "y": 0.08,
+        "w": 0.43,
+        "h": 0.32
+      },
+      "layer": 1,
+      "reason": "Clarify the three steps described in the hypothetical brief.",
+      "priority": 70,
+      "source": {
+        "kind": "brief",
+        "reference": "Hypothetical demo only: the names and measurements below are fictional sample content."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 600
+      },
+      "allowAcrossCuts": false
+    },
+    {
+      "id": "steps",
+      "startFrame": 930,
+      "endFrame": 1140,
+      "component": "list",
+      "props": {
+        "title": "The feedback loop",
+        "items": [
+          "Make one change",
+          "Run one check",
+          "Read the result"
+        ]
+      },
+      "job": "clarify",
+      "anchor": "top-left",
+      "box": {
+        "x": 0.06,
+        "y": 0.08,
+        "w": 0.43,
+        "h": 0.48
+      },
+      "layer": 1,
+      "reason": "Make a process easier to remember.",
+      "priority": 70,
+      "source": {
+        "kind": "brief",
+        "reference": "Hypothetical demo only: the names and measurements below are fictional sample content."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 930
+      },
+      "allowAcrossCuts": false
+    },
+    {
+      "id": "annotation",
+      "startFrame": 1260,
+      "endFrame": 1380,
+      "component": "callout",
+      "props": {
+        "label": "Inspect the result",
+        "shape": "arrow",
+        "points": [
+          [
+            0.1,
+            0.62
+          ],
+          [
+            0.6,
+            0.62
+          ],
+          [
+            0.9,
+            0.9
+          ]
+        ]
+      },
+      "job": "clarify",
+      "anchor": "top-left",
+      "box": {
+        "x": 0.06,
+        "y": 0.08,
+        "w": 0.43,
+        "h": 0.32
+      },
+      "layer": 1,
+      "reason": "Point to the result panel in the hypothetical screen recording.",
+      "priority": 70,
+      "source": {
+        "kind": "brief",
+        "reference": "Hypothetical demo only: the names and measurements below are fictional sample content."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 1260
+      },
+      "allowAcrossCuts": false
+    },
+    {
+      "id": "close",
+      "startFrame": 1530,
+      "endFrame": 1770,
+      "component": "cta",
+      "props": {
+        "text": "Try the loop",
+        "secondary": "Build. Check. Learn.",
+        "endScreen": true
+      },
+      "job": "convert",
+      "anchor": "top-left",
+      "box": {
+        "x": 0.06,
+        "y": 0.12,
+        "w": 0.43,
+        "h": 0.32
+      },
+      "layer": 1,
+      "reason": "Give the viewer one concrete next action.",
+      "priority": 70,
+      "source": {
+        "kind": "brief",
+        "reference": "Hypothetical demo only: the names and measurements below are fictional sample content."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 1530
+      },
+      "allowAcrossCuts": false
+    }
+  ]
+}
