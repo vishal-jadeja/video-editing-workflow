@@ -1,0 +1,58 @@
+{
+  "name": "motion-graphics-finishing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "mg": "tsx pipeline/cli.ts",
+    "studio": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --exclude tests/visual.test.ts",
+    "test:visual": "vitest run tests/visual.test.ts",
+    "test:visual:update": "UPDATE_SNAPSHOTS=1 vitest run tests/visual.test.ts",
+    "check": "npm run typecheck && npm test",
+    "setup:python": "python3 -m venv .venv && .venv/bin/python -m pip install -r pipeline/requirements.txt",
+    "test:integration": "MG_INTEGRATION=1 vitest run tests/pipeline.test.ts"
+  },
+  "dependencies": {
+    "@fontsource/anek-latin": "5.3.0",
+    "@fontsource/anton": "5.3.0",
+    "@fontsource/bebas-neue": "5.3.0",
+    "@fontsource/dm-sans": "5.3.0",
+    "@fontsource/great-vibes": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/instrument-serif": "5.3.0",
+    "@fontsource/inter": "5.3.0",
+    "@fontsource/montserrat": "5.3.0",
+    "@fontsource/playfair-display": "5.3.0",
+    "@fontsource/poppins": "5.3.0",
+    "@remotion/bundler": "4.0.526",
+    "@remotion/cli": "4.0.526",
+    "@remotion/fonts": "4.0.526",
+    "@remotion/lottie": "4.0.526",
+    "@remotion/renderer": "4.0.526",
+    "gsap": "3.15.0",
+    "prismjs": "1.30.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.526",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/jsdom": "30.0.0",
+    "@types/node": "26.6.2",
+    "@types/pngjs": "6.0.5",
+    "@types/prismjs": "1.26.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "jsdom": "29.1.1",
+    "pixelmatch": "7.2.0",
+    "pngjs": "7.0.0",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vitest": "5.0.1"
+  }
+}

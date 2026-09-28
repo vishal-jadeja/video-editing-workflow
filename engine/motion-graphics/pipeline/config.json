@@ -1,0 +1,6 @@
+{
+  "analysis": {"sampleSeconds": 0.25, "sceneThreshold": 27, "analysisWidth": 480, "faceScaleFactor": 1.1, "faceMinNeighbors": 5, "faceMinSize": 20},
+  "render": {"crf": 17, "concurrency": 2},
+  "sfx": {"sampleRate": 48000, "durations": {"click": 0.045, "pop": 0.13, "whoosh": 0.3, "riser": 0.65}},
+  "qa": {"audioStartToleranceSeconds": 0.001, "durationToleranceSeconds": 0.00001, "loudnessToleranceLu": 1}
+}

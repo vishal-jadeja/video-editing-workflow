@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "number",
+    "startFrame": 20,
+    "endFrame": 89,
+    "text": "This pipeline renders 40 percent faster than the old one.",
+    "priority": 85
+  },
+  {
+    "kind": "comparison",
+    "startFrame": 20,
+    "endFrame": 89,
+    "text": "This pipeline renders 40 percent faster than the old one.",
+    "priority": 80
+  },
+  {
+    "kind": "hook",
+    "startFrame": 20,
+    "endFrame": 89,
+    "text": "This pipeline renders 40 percent faster than the old one.",
+    "priority": 95
+  },
+  {
+    "kind": "chapter",
+    "startFrame": 120,
+    "endFrame": 161,
+    "text": "Finally subscribe for the next build video.",
+    "priority": 70
+  },
+  {
+    "kind": "cta",
+    "startFrame": 120,
+    "endFrame": 161,
+    "text": "Finally subscribe for the next build video.",
+    "priority": 90
+  },
+  {
+    "kind": "hook",
+    "startFrame": 120,
+    "endFrame": 161,
+    "text": "Finally subscribe for the next build video.",
+    "priority": 95
+  }
+]

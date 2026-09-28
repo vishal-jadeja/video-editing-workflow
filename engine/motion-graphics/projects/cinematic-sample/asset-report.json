@@ -1,0 +1,36 @@
+{
+  "fonts": [
+    {
+      "family": "Playfair Display",
+      "weight": 500,
+      "style": "normal",
+      "file": "playfair-display-latin-500-normal.woff2",
+      "path": "public/fonts/playfair-display-latin-500-normal.woff2",
+      "license": "SIL OFL 1.1"
+    },
+    {
+      "family": "Montserrat",
+      "weight": 400,
+      "style": "normal",
+      "file": "montserrat-latin-400-normal.woff2",
+      "path": "public/fonts/montserrat-latin-400-normal.woff2",
+      "license": "SIL OFL 1.1"
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weight": 400,
+      "style": "normal",
+      "file": "ibm-plex-mono-latin-400-normal.woff2",
+      "path": "public/fonts/ibm-plex-mono-latin-400-normal.woff2",
+      "license": "SIL OFL 1.1"
+    }
+  ],
+  "assets": [],
+  "sfx": [],
+  "source": {
+    "path": "media/locked-background.mp4",
+    "origin": "Original procedural light-ring background generated for this demonstration",
+    "license": "CC0-1.0"
+  },
+  "music": "None"
+}

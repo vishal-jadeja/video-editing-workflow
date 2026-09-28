@@ -1,0 +1,68 @@
+{
+  "planHash": "34d14db2b86d89b81e585135fae193b023d09468ec9ece600548c68c1e723ab0",
+  "findings": [
+    {
+      "severity": "warning",
+      "code": "loudness",
+      "message": "Preserved mix differs from requested loudness target; optional normalization changes the mix."
+    }
+  ],
+  "manualReview": "PENDING: watch source and output with audio; inspect all cue edge/midpoint frames and verify names, UI regions, contrast during motion, sync, and alpha in the target NLE.",
+  "frames": [
+    7,
+    8,
+    53,
+    99,
+    100
+  ],
+  "media": {
+    "status": "passed",
+    "checks": [
+      {
+        "name": "frame-count",
+        "pass": true,
+        "details": "180 / 180"
+      },
+      {
+        "name": "fps",
+        "pass": true,
+        "details": "30/1"
+      },
+      {
+        "name": "duration",
+        "pass": true,
+        "details": "6 / 6"
+      },
+      {
+        "name": "resolution",
+        "pass": true,
+        "details": "1280x720"
+      },
+      {
+        "name": "audio-stream-count",
+        "pass": true,
+        "details": "1"
+      },
+      {
+        "name": "audio-0-bytes",
+        "pass": true,
+        "details": "SHA256=bce6400f7e97c335e5dd9d45912bab30f4fe937a12600ba3bee1765991f58072"
+      },
+      {
+        "name": "audio-0-sync",
+        "pass": true,
+        "details": "First audio presentation timestamp must match."
+      },
+      {
+        "name": "alpha-format",
+        "pass": true,
+        "details": "yuva444p12le"
+      },
+      {
+        "name": "audio-clipping",
+        "pass": true,
+        "details": "{\"integrated\":-22.03,\"truePeak\":-17.22,\"lra\":0}"
+      }
+    ]
+  }
+}

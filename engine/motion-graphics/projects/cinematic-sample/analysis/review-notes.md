@@ -1,0 +1,1 @@
+Generated abstract background inspected at first, middle and last frames. No people, faces, text or UI. Left negative space retained for typography. This is an assistant-reviewed synthetic sample; no human production approval is asserted.

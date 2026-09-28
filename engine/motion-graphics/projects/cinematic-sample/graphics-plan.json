@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "slug": "cinematic-sample",
+  "preset": "cinematic-doc",
+  "fontPairing": "editorial-geometric",
+  "platform": "youtube",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "durationFrames": 300,
+  "seed": "cinematic-study-01",
+  "audio": {
+    "mode": "preserve",
+    "targetLufs": -14,
+    "sfx": []
+  },
+  "assets": [],
+  "rules": {},
+  "needsInput": [],
+  "cues": [
+    {
+      "anchor": "top-left",
+      "layer": 1,
+      "priority": 80,
+      "source": {
+        "kind": "brief",
+        "reference": "brief.json: original cinematic demonstration copy; generated sample, not a factual claim."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 0
+      },
+      "allowAcrossCuts": false,
+      "id": "cinematic-title",
+      "component": "chapter-title",
+      "startFrame": 12,
+      "endFrame": 120,
+      "job": "navigate",
+      "box": {
+        "x": 0.095,
+        "y": 0.34,
+        "w": 0.43,
+        "h": 0.3
+      },
+      "reason": "Introduce the cinematic sample with one deliberate typographic reveal.",
+      "props": {
+        "title": "Motion with meaning",
+        "kicker": "MOTION STUDY",
+        "depth": true
+      }
+    },
+    {
+      "anchor": "top-left",
+      "layer": 1,
+      "priority": 80,
+      "source": {
+        "kind": "brief",
+        "reference": "brief.json: original cinematic demonstration copy; generated sample, not a factual claim."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 0
+      },
+      "allowAcrossCuts": false,
+      "id": "preset-ident",
+      "component": "lower-third",
+      "startFrame": 210,
+      "endFrame": 300,
+      "job": "identify",
+      "box": {
+        "x": 0.095,
+        "y": 0.74,
+        "w": 0.3,
+        "h": 0.15
+      },
+      "reason": "Identify the demonstrated theme after a three-second clean interval.",
+      "props": {
+        "name": "Cinematic Doc",
+        "variant": "tool"
+      }
+    },
+    {
+      "anchor": "full",
+      "layer": 0,
+      "priority": 10,
+      "source": {
+        "kind": "brief",
+        "reference": "brief.json: original cinematic demonstration copy; generated sample, not a factual claim."
+      },
+      "sync": {
+        "kind": "none",
+        "frame": 0
+      },
+      "allowAcrossCuts": false,
+      "id": "finishing",
+      "component": "finishing",
+      "startFrame": 0,
+      "endFrame": 300,
+      "job": "rhythm",
+      "box": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      "reason": "Unify the abstract sample with restrained seeded texture and letterbox framing.",
+      "props": {
+        "grain": true,
+        "vignette": true,
+        "letterbox": true
+      }
+    }
+  ]
+}

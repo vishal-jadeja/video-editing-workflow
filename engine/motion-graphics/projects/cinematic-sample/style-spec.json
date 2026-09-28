@@ -1,0 +1,172 @@
+{
+  "preset": "cinematic-doc",
+  "fontPairing": "editorial-geometric",
+  "requestedPairing": "Playfair Display + Gilroy Regular",
+  "substitutions": [
+    "Montserrat Regular replaces Gilroy Regular."
+  ],
+  "tokens": {
+    "name": "cinematic-doc",
+    "fonts": {
+      "display": "\"Playfair Display\", sans-serif",
+      "body": "\"Montserrat\", sans-serif",
+      "mono": "\"IBM Plex Mono\", monospace",
+      "weight": 400,
+      "strong": 400,
+      "displayWeight": 500,
+      "displayStyle": "normal",
+      "bodyStyle": "normal",
+      "faces": [
+        {
+          "family": "Playfair Display",
+          "weight": 500,
+          "style": "normal",
+          "file": "playfair-display-latin-500-normal.woff2"
+        },
+        {
+          "family": "Montserrat",
+          "weight": 400,
+          "style": "normal",
+          "file": "montserrat-latin-400-normal.woff2"
+        },
+        {
+          "family": "IBM Plex Mono",
+          "weight": 400,
+          "style": "normal",
+          "file": "ibm-plex-mono-latin-400-normal.woff2"
+        }
+      ]
+    },
+    "color": {
+      "primary": "#F4F7FC",
+      "accent": "#F3D4A0",
+      "text": "#F4F7FC",
+      "muted": "#CDC5B8",
+      "panel": "#181715",
+      "code": "#F4F7FC",
+      "keyword": "#A9C7FF",
+      "string": "#F3D4A0"
+    },
+    "type": {
+      "title": 0.053,
+      "body": 0.032,
+      "caption": 0.042,
+      "small": 0.023,
+      "counter": 0.082,
+      "lineHeight": 1.25,
+      "tracking": -0.015
+    },
+    "space": {
+      "xs": 0.007,
+      "sm": 0.014,
+      "md": 0.022,
+      "lg": 0.035
+    },
+    "radius": 0.003,
+    "stroke": 0.003,
+    "shadow": "0 0.012em 0.08em #00000040",
+    "motion": {
+      "in30": 15,
+      "out30": 9,
+      "stagger30": 4,
+      "distance": 0.012,
+      "overshoot": 0.035,
+      "maxTilt": 7,
+      "spring": {
+        "damping": 18,
+        "stiffness": 130,
+        "mass": 1
+      },
+      "entry": [
+        0.16,
+        1,
+        0.3,
+        1
+      ],
+      "exit": [
+        0.7,
+        0,
+        0.84,
+        0
+      ]
+    },
+    "grain": {
+      "opacity": 0.045,
+      "count": 200,
+      "size": 0.0015
+    },
+    "vignette": 0.16,
+    "letterbox": 0.075,
+    "stillScale": 1.045,
+    "safe": {
+      "youtube": {
+        "left": 0.05,
+        "right": 0.05,
+        "top": 0.05,
+        "bottom": 0.05
+      },
+      "shorts": {
+        "left": 0.06,
+        "right": 0.18,
+        "top": 0.14,
+        "bottom": 0.2
+      },
+      "reels": {
+        "left": 0.06,
+        "right": 0.18,
+        "top": 0.14,
+        "bottom": 0.2
+      },
+      "tiktok": {
+        "left": 0.06,
+        "right": 0.2,
+        "top": 0.14,
+        "bottom": 0.22
+      }
+    },
+    "actionMargin": 0.035,
+    "rules": {
+      "maxPer10s": 2,
+      "minGapSeconds": 3,
+      "maxSimultaneous": 2,
+      "wordsPerSecond": 3,
+      "readPaddingSeconds": 1,
+      "minReadSeconds": 1.5,
+      "maxCaptionChars": 30,
+      "maxCaptionLines": 2,
+      "maxTransitionsPerMinute": 1,
+      "minContrast": 4.5,
+      "snapToleranceFrames": 2,
+      "facePadding": 0.02,
+      "maxSfxGain": 0.25
+    },
+    "audio": {
+      "lufs": -14,
+      "truePeak": -1,
+      "lra": 11,
+      "sfxGain": 0.08,
+      "duckThreshold": 0.025,
+      "duckRatio": 8,
+      "attackMs": 8,
+      "releaseMs": 180
+    },
+    "endScreen": [
+      {
+        "x": 0.56,
+        "y": 0.55,
+        "w": 0.38,
+        "h": 0.38
+      },
+      {
+        "x": 0.75,
+        "y": 0.15,
+        "w": 0.16,
+        "h": 0.28
+      }
+    ]
+  },
+  "platform": "youtube",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30
+}

@@ -1,0 +1,23 @@
+{
+  "purpose": "Original 10-second cinematic motion-graphics review sample requested by the user.",
+  "copy": {
+    "title": "Motion with meaning",
+    "kicker": "MOTION STUDY",
+    "lowerThird": "Cinematic Doc"
+  },
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "durationFrames": 300
+  },
+  "preset": "cinematic-doc",
+  "fontPairing": "editorial-geometric",
+  "audio": "Silent; no music or SFX.",
+  "sourceAsset": {
+    "file": "media/background.png",
+    "origin": "Original procedural abstract light-ring image generated for this sample",
+    "license": "CC0-1.0"
+  },
+  "reviewStatus": "Sample preview; no human production approval is claimed."
+}
