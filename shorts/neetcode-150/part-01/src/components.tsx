@@ -18,18 +18,19 @@ export const Reveal:React.FC<{p:number;children:React.ReactNode}>=({p,children})
 
 export const ProblemCard:React.FC<{part:number;title:string}>=({part,title})=> {
   const t=useCurrentFrame()/30;const kicker=move(t,3),head=move(t,3.08),rule=move(t,3.16,.4);
-  return <div style={{position:'absolute',left:60,top:86,width:860}}>
+  return <><div style={{position:'absolute',left:0,top:0,width:1080,height:420,opacity:kicker,background:'linear-gradient(to bottom, rgba(8,9,10,.72) 0%, rgba(8,9,10,.45) 55%, rgba(8,9,10,0) 100%)'}}/>
+  <div style={{position:'absolute',left:60,top:86,width:860,textShadow:glyphShadow}}>
     <Reveal p={kicker}><div style={{display:'flex',justifyContent:'space-between',...label,fontSize:24}}><span>NeetCode 150 · Part {String(part).padStart(2,'0')}</span><span style={{color:C.muted}}>{episode.difficulty}</span></div></Reveal>
     <div style={{height:1,marginTop:18,width:`${rule*100}%`,background:C.line}}/>
     <div style={{marginTop:22}}><Reveal p={head}><div style={{fontSize:76,fontWeight:700,letterSpacing:'-.045em',lineHeight:1}}>{title}</div></Reveal></div>
-  </div>;
+  </div></>;
 };
 export const ApproachLabel:React.FC<{label:string;color:string}>=({label:text,color})=><div style={{display:'flex',alignItems:'center',gap:16,...label,fontSize:30,lineHeight:1.3,color:C.text}}><span style={{width:14,height:14,background:color,flexShrink:0}}/>{text}</div>;
 export const ComplexityLine:React.FC<{time:string;space:string;color:string}>=({time,space})=><div style={{fontFamily:mono,fontSize:28,marginTop:18,whiteSpace:'nowrap',color:C.muted}}><span style={{color:C.text}}>{time}</span> time · <span style={{color:C.text}}>{space}</span> space</div>;
 export const ApproachHeader:React.FC<{scene:Scene}>=({scene})=><div style={{position:'absolute',left:60,top:346}}><ApproachLabel label={scene.label!} color={scene.color!}/><ComplexityLine time={scene.time!} space={scene.space!} color={scene.color!}/></div>;
 
 export const Tile:React.FC<{value:number|string;index?:number|string;size?:number;duplicate?:boolean;active?:boolean;style?:React.CSSProperties}>=({value,index,size=132,duplicate=false,active=false,style})=><div style={{position:'absolute',width:size,height:size,...style}}>
-  <div style={{width:size,height:size,boxSizing:'border-box',background:duplicate?'rgba(123,77,255,.14)':C.faint,border:duplicate?`3px solid ${C.violet}`:active?`2px solid ${C.text}`:`1.5px solid ${C.line}`,display:'flex',alignItems:'center',justifyContent:'center',fontFamily:sans,fontSize:typeof value==='number'&&value>999?30:Math.round(size*.46),fontWeight:400,letterSpacing:'-.02em',fontVariantNumeric:'tabular-nums'}}>{value}</div>
+  <div style={{width:size,height:size,boxSizing:'border-box',background:duplicate?'#221A3A':C.panel,border:duplicate?`3px solid ${C.violet}`:active?`2px solid ${C.text}`:`1.5px solid ${C.line}`,display:'flex',alignItems:'center',justifyContent:'center',fontFamily:sans,fontSize:typeof value==='number'&&value>999?30:Math.round(size*.46),fontWeight:400,letterSpacing:'-.02em',fontVariantNumeric:'tabular-nums'}}>{value}</div>
   {index!==undefined&&<div style={{textAlign:'center',fontFamily:mono,fontSize:21,color:C.muted,marginTop:12}}>{index}</div>}
 </div>;
 export const ArrayTiles:React.FC<{values:(number|string)[];top?:number;duplicate?:number[];active?:number[];opacity?:number[];size?:number}>=({values,top=555,duplicate=[],active=[],opacity=[],size=132})=>{
@@ -37,7 +38,7 @@ export const ArrayTiles:React.FC<{values:(number|string)[];top?:number;duplicate
   return <>{values.map((v,i)=><Tile key={i} value={v} index={v==='…'?'…':i===5?'99999':i} size={size} duplicate={duplicate.includes(i)} active={active.includes(i)} style={{left:start+i*(size+gap),top,opacity:opacity[i]??1}}/>)}</>;
 };
 export const Pointer:React.FC<{x:number;y:number;label:string;color:string}>=({x,y,label,color})=><div style={{position:'absolute',left:x-20,top:y,fontFamily:mono,fontSize:30,color,width:40,textAlign:'center'}}><div>{label}</div><div style={{width:2,height:23,background:color,margin:'7px auto 0'}}/></div>;
-export const SetBox:React.FC<{children?:React.ReactNode;error?:boolean;top?:number}>=({children,error=false,top=790})=><div style={{position:'absolute',left:168,top,width:644,height:150,border:error?`3px solid ${C.violet}`:`1.5px solid ${C.line}`,background:C.faint,boxSizing:'border-box',padding:22}}><div style={{fontFamily:mono,fontSize:27,color:C.muted}}>seen = set()</div>{children}</div>;
+export const SetBox:React.FC<{children?:React.ReactNode;error?:boolean;top?:number}>=({children,error=false,top=790})=><div style={{position:'absolute',left:168,top,width:644,height:150,border:error?`3px solid ${C.violet}`:`1.5px solid ${C.line}`,background:C.panel,boxSizing:'border-box',padding:22}}><div style={{fontFamily:mono,fontSize:27,color:C.muted}}>seen = set()</div>{children}</div>;
 
 // Monochrome syntax: keywords recede, the approach colour marks only the active line.
 function tokens(line:string){return line.split(/(\b(?:def|return|for|in|if|True|False)\b)/g).map((s,i)=><span key={i} style={{color:/^(def|return|for|in|if)$/.test(s)?C.muted:C.text}}>{s}</span>);}
