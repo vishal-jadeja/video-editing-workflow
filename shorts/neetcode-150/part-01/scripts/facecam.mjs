@@ -26,7 +26,9 @@ export function resolveLayouts(episode,timeline){
 }
 
 export async function prepareFacecam(){
-  const config=JSON.parse(await readFile(process.env.FACECAM_CONFIG||'data/facecam.json','utf8'));
+  // Recorded edition: the camera is the edited take written by scripts/recorded.mjs.
+  const provider=JSON.parse(await readFile('public/audio/provider.json','utf8').catch(()=>'{}'));
+  const config=JSON.parse(await readFile(provider.provider==='recorded'?'src/generated/facecam-recorded.json':process.env.FACECAM_CONFIG||'data/facecam.json','utf8'));
   const episode=JSON.parse(await readFile(process.env.PART_DATA||'data/part-01.json','utf8'));
   const timeline=JSON.parse(await readFile('src/generated/timeline.json','utf8'));
   const layouts=resolveLayouts(episode,timeline);

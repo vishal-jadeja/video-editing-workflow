@@ -23,7 +23,8 @@ for(const scene of data.scenes) {
     if(found<0)throw Error(`Unaligned cue ${scene.id}.${key}: ${phrase}`);
     cues[key]=words[found].start;
   }
-  const frames=Math.ceil((duration+(scene.id==='cta'?0.75:0.12))*30);
+  // Recorded scenes are cut from one continuous take, so they keep their exact length (the tail hold is in the take).
+  const frames=provider.provider==='recorded'?Math.round(duration*30):Math.ceil((duration+(scene.id==='cta'?0.75:0.12))*30);
   scenes.push({...scene,start:cursor/30,startFrame:cursor,frames,duration:frames/30,words,cues});
   cursor+=frames;
 }

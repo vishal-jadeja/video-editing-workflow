@@ -63,12 +63,23 @@ export function validateEpisode(episode) {
 export async function loadWorkflow(configFile) {
   const configPath = path.resolve(configFile);
   const config = JSON.parse(await readFile(configPath, 'utf8'));
-  const allowed = ['version', 'format', 'project', 'episode', 'facecam', 'provider', 'maxDurationSeconds', 'allowPlaceholderFacecam'];
+  const allowed = ['version', 'format', 'project', 'episode', 'facecam', 'provider', 'recording', 'edit', 'maxDurationSeconds', 'allowPlaceholderFacecam'];
   requireThat(config && typeof config === 'object' && !Array.isArray(config), 'Workflow config must be an object.');
   for (const key of Object.keys(config)) requireThat(allowed.includes(key), `Unknown workflow option: ${key}.`);
   requireThat(config.version === 1 && config.format === 'shorts', 'Expected version 1 and format shorts.');
   for (const key of ['project', 'episode', 'facecam']) requireThat(nonempty(config[key]), `${key} path is required.`);
-  requireThat(['local', 'openai'].includes(config.provider), 'provider must be local or openai.');
+  requireThat(['local', 'openai', 'recorded'].includes(config.provider), 'provider must be local, openai or recorded.');
+  // recorded: the face-cam take (video with audio) is both the camera and the narration.
+  if (config.provider === 'recorded') requireThat(nonempty(config.recording), 'provider recorded needs a "recording" path to the face-cam video.');
+  else requireThat(config.recording === undefined && config.edit === undefined, '"recording" and "edit" only apply to provider recorded.');
+  if (config.edit !== undefined) {
+    requireThat(config.edit && typeof config.edit === 'object' && !Array.isArray(config.edit), 'edit must be an object.');
+    for (const [key, value] of Object.entries(config.edit)) {
+      if (['maxPauseSeconds', 'keepPauseSeconds', 'leadSeconds', 'tailSeconds'].includes(key)) requireThat(Number.isFinite(value) && value >= 0 && value <= 5, `edit.${key} must be between 0 and 5 seconds.`);
+      else if (['removeRetakes', 'denoise'].includes(key)) requireThat(typeof value === 'boolean', `edit.${key} must be boolean.`);
+      else throw new Error(`Unknown edit option: ${key}.`);
+    }
+  }
   requireThat(Number.isFinite(config.maxDurationSeconds) && config.maxDurationSeconds > 0, 'maxDurationSeconds must be positive.');
   requireThat(typeof config.allowPlaceholderFacecam === 'boolean', 'allowPlaceholderFacecam must be boolean.');
   const project = path.resolve(path.dirname(configPath), config.project);
@@ -78,7 +89,8 @@ export async function loadWorkflow(configFile) {
   const facecam = JSON.parse(await readFile(facecamPath, 'utf8'));
   requireThat(facecam && nonempty(facecam.file), 'Facecam config must specify a file (it may be absent when placeholders are allowed).');
   for (const id of Object.keys(facecam.sceneOverrides ?? {})) requireThat(Object.hasOwn(requiredCues, id), `Unknown facecam scene: ${id}.`);
-  return {config, configPath, project, episodePath, facecamPath, episode};
+  const recordingPath = config.provider === 'recorded' ? path.resolve(project, config.recording) : null;
+  return {config, configPath, project, episodePath, facecamPath, recordingPath, episode};
 }
 
 export function createPlan(workflow, command) {
@@ -86,7 +98,9 @@ export function createPlan(workflow, command) {
   const node = (id, script, ...args) => ({id, executable: process.execPath, args: [script, ...args]});
   const steps = [
     node('prepare', 'scripts/prepare.mjs'),
-    node('narration-and-alignment', 'scripts/voice.mjs', workflow.config.provider),
+    workflow.config.provider === 'recorded'
+      ? node('recording-edit', 'scripts/recorded.mjs')
+      : node('narration-and-alignment', 'scripts/voice.mjs', workflow.config.provider),
     {id: 'duration', gate: true},
     node('facecam', 'scripts/facecam.mjs'),
     {id: 'camera-policy', gate: true},
@@ -124,7 +138,12 @@ export async function doctor(workflow, env = process.env) {
   for (const tool of ['ffmpeg', 'ffprobe']) await check(tool, () => probe(tool, ['-version']));
   await check('Python alignment and audio dependencies', () => probe('.venv/bin/python', ['-c', 'import stable_whisper, numpy, torch']));
   await check('Chromium browser', () => access(env.REMOTION_BROWSER_EXECUTABLE || '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser', constants.X_OK));
-  if (workflow.config.provider === 'local') {
+  if (workflow.config.provider === 'recorded') {
+    await check('Face-cam recording (video + audio)', () => {
+      const streams = JSON.parse(probe('ffprobe', ['-v', 'error', '-show_entries', 'stream=codec_type', '-of', 'json', workflow.recordingPath])).streams.map(s => s.codec_type);
+      requireThat(streams.includes('video') && streams.includes('audio'), `${workflow.recordingPath} needs both a video and an audio stream.`);
+    });
+  } else if (workflow.config.provider === 'local') {
     await check('macOS Daniel voice', () => {
       requireThat(process.platform === 'darwin', 'Local narration requires macOS; choose openai on other systems.');
       requireThat(/^Daniel\s/m.test(probe('say', ['-v', '?'])), 'Install Daniel in macOS speech settings.');
@@ -165,6 +184,12 @@ export async function withProjectLock(project, task) {
   } finally { await rm(lock, {recursive: true, force: true}); }
 }
 
+export function stepEnv(workflow, env = process.env) {
+  const result = {...env, PART_DATA: workflow.episodePath, FACECAM_CONFIG: workflow.facecamPath};
+  if (workflow.config.provider === 'recorded') Object.assign(result, {RECORDING: workflow.recordingPath, RECORDING_EDIT: JSON.stringify(workflow.config.edit ?? {})});
+  return result;
+}
+
 export async function executeWorkflow(workflow, command, {run = runProcess, gate = runGate, env = process.env} = {}) {
   return withProjectLock(workflow.project, async () => {
     const reportFile = path.join(workflow.project, 'out/shorts-workflow.json');
@@ -182,7 +207,7 @@ export async function executeWorkflow(workflow, command, {run = runProcess, gate
         await save();
         console.log(`\n[shorts] ${step.id}`);
         if (step.gate) await gate(step, workflow);
-        else await run(step.executable, step.args, {cwd: workflow.project, env: {...env, PART_DATA: workflow.episodePath, FACECAM_CONFIG: workflow.facecamPath}});
+        else await run(step.executable, step.args, {cwd: workflow.project, env: stepEnv(workflow, env)});
         record.status = 'passed';
         record.finishedAt = new Date().toISOString();
         await save();

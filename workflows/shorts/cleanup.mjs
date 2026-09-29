@@ -9,6 +9,8 @@ function audioCandidates(episode) {
     'voice.wav', 'premix.wav', 'sfx.wav', 'mix-corrected.wav',
   ].map(name => `public/audio/${name}`);
 }
+// Recorded edition: transcription audio and the edited take (rebuilt from the original recording on the next run).
+const recordedCandidates = ['out/recording/source-16k.wav', 'out/recording/edited.mov'];
 
 async function inspect(project, relative) {
   const parts = relative.split('/');
@@ -59,7 +61,8 @@ export async function cleanupWorkflow(workflow, {apply = false, includeReview = 
     for (const file of [camera.file, ...Object.values(camera.sceneOverrides ?? {}).map(scene => scene.file)]) {
       if (file) protectedPaths.add(path.resolve(workflow.project, file));
     }
-    const candidates = audioCandidates(workflow.episode);
+    if (workflow.recordingPath) protectedPaths.add(path.resolve(workflow.recordingPath));
+    const candidates = [...audioCandidates(workflow.episode), ...(workflow.config?.provider === 'recorded' ? recordedCandidates : [])];
     if (includeReview) {
       const qa = await inspect(workflow.project, 'out/qa');
       if (qa && !qa.isDirectory()) throw new Error('Expected directory: out/qa');

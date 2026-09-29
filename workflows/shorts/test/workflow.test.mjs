@@ -4,7 +4,7 @@ import {mkdtemp, readFile, rm, writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {createPlan, executeWorkflow, loadWorkflow, validateDuration, validateEpisode, withProjectLock} from '../workflow.mjs';
+import {createPlan, executeWorkflow, loadWorkflow, stepEnv, validateDuration, validateEpisode, withProjectLock} from '../workflow.mjs';
 
 const defaultConfig = fileURLToPath(new URL('../default.json', import.meta.url));
 const current = await loadWorkflow(defaultConfig);
@@ -52,6 +52,24 @@ test('preview omits video and export validation, build orders gates before rende
   assert.deepEqual(preview, build.slice(0, -2));
   assert.ok(build.indexOf('duration') < build.indexOf('audio-mix'));
   assert.ok(build.indexOf('camera-policy') < build.indexOf('review-stills'));
+});
+
+test('recorded provider needs a recording, validates edit options and replaces narration with the recording edit', async t => {
+  const {project} = await tempProject(t);
+  const write = async (config) => { const file = path.join(project, 'config.json'); await writeFile(file, JSON.stringify({...current.config, project: current.project, ...config})); return file; };
+  await assert.rejects(loadWorkflow(await write({provider: 'recorded'})), /needs a "recording" path/);
+  await assert.rejects(loadWorkflow(await write({recording: 'take.mp4'})), /only apply to provider recorded/);
+  await assert.rejects(loadWorkflow(await write({provider: 'recorded', recording: 'take.mp4', edit: {maxPause: 1}})), /Unknown edit option/);
+  await assert.rejects(loadWorkflow(await write({provider: 'recorded', recording: 'take.mp4', edit: {maxPauseSeconds: -1}})), /between 0 and 5/);
+  const recorded = await loadWorkflow(await write({provider: 'recorded', recording: 'assets/take.mp4', edit: {maxPauseSeconds: .4}}));
+  assert.equal(recorded.recordingPath, path.join(current.project, 'assets/take.mp4'));
+  const ids = createPlan(recorded, 'build').map(s => s.id);
+  assert.ok(ids.includes('recording-edit') && !ids.includes('narration-and-alignment'));
+  assert.ok(ids.indexOf('recording-edit') < ids.indexOf('duration'));
+  const env = stepEnv(recorded, {});
+  assert.equal(env.RECORDING, recorded.recordingPath);
+  assert.deepEqual(JSON.parse(env.RECORDING_EDIT), {maxPauseSeconds: .4});
+  assert.equal(stepEnv(current, {}).RECORDING, undefined);
 });
 
 test('duration gate rejects over-budget and invalid timelines', () => {

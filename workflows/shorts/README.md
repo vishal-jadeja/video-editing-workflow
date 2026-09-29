@@ -4,6 +4,11 @@ The workflow connects the existing Remotion project into a repeatable pipeline:
 
 `brief → script/cues → narration/alignment → duration check → camera → typecheck → audio mix → review stills/cover → MP4 → export validation`
 
+There are two ways to supply the voice:
+
+- **Recorded (your face-cam take):** give the script and one face-cam video with audio. The workflow edits the take, uses your voice as the narration, adds motion graphics, captions and SFX, and exports the final video. See [Recorded face-cam edition](#recorded-face-cam-edition).
+- **Generated narration:** macOS Daniel or OpenAI speech reads the script; face-cam footage is optional and muted.
+
 ## One-time setup
 
 Use Node 22+, Python 3.10+, ffmpeg/ffprobe and a Chromium browser. Install the renderer and alignment dependencies from the repository root:
@@ -45,13 +50,38 @@ Copy [default.json](default.json) beside it and edit its paths/settings, then pa
 | `project` | Renderer directory, relative to the workflow config |
 | `episode` | Episode JSON, relative to the renderer directory |
 | `facecam` | Camera config, relative to the renderer directory |
-| `provider` | `local` for macOS Daniel, or `openai` |
+| `provider` | `recorded` for your own face-cam take, `local` for macOS Daniel, or `openai` |
+| `recording` | Recorded only: the face-cam video (with audio), relative to the renderer directory |
+| `edit` | Recorded only, optional: `maxPauseSeconds` (0.5), `keepPauseSeconds` (0.3), `leadSeconds` (0.15), `tailSeconds` (0.75), `removeRetakes` (true), `denoise` (true) |
 | `maxDurationSeconds` | Editorial limit checked against aligned narration; default 90 seconds |
 | `allowPlaceholderFacecam` | Explicitly allow silhouettes for missing footage; default `true` for the existing example |
 
 The 90-second budget is a project choice, not a platform eligibility claim. Shorten the narration if the duration gate fails, or deliberately change the budget. The workflow does not truncate speech.
 
-For a camera edition, supply footage and set `allowPlaceholderFacecam` to `false` before the final build. See [FACECAM.md](../../shorts/neetcode-150/part-01/FACECAM.md) for takes, trimming and crops. Footage paths inside that JSON are relative to the renderer directory. Camera audio remains muted; generated narration is the master audio. For a graphics-only edit, set every scene's layout to `graphics`.
+For a camera edition, supply footage and set `allowPlaceholderFacecam` to `false` before the final build. See [FACECAM.md](../../shorts/neetcode-150/part-01/FACECAM.md) for takes, trimming and crops. Footage paths inside that JSON are relative to the renderer directory. With generated narration, camera audio remains muted and the narration is the master audio; in the recorded edition the take's own audio is the narration. For a graphics-only edit, set every scene's layout to `graphics`.
+
+### Recorded face-cam edition
+
+Inputs: the episode JSON (your script, cues and layouts) and one face-cam recording with audio that covers the whole script in order. Copy [recorded.json](recorded.json), set `recording`, and put the take at that path (for example `shorts/neetcode-150/part-01/assets/recording.mp4`; recordings there are git-ignored).
+
+```sh
+npm run shorts -- preview --config workflows/shorts/recorded.json
+npm run shorts -- build --config workflows/shorts/recorded.json
+```
+
+The `recording-edit` stage replaces speech generation:
+
+1. **Transcribe** the take locally with word timestamps (Whisper `small.en` by default; set `ASR_MODEL` to change it). The first run downloads the model.
+2. **Match the transcript to the script.** Speech that is not in the script is cut: chatter before and after, restarted lines (the later take is kept), phrases said by mistake mid-sentence, and recognised fillers. Numbers match whether heard as digits or words, and a single misheard word is never treated as a flub.
+3. **Tighten pauses** longer than `maxPauseSeconds` down to `keepPauseSeconds`, but only where the gap is actually silent.
+4. **Render one locked edit** of the take (`out/recording/edited.mov`): video and audio are cut together at frame boundaries with 12 ms audio fades, so lip sync is preserved.
+5. **Split the edit into scenes** at the pause before each scene's first word, clean the voice (80 Hz high-pass, gentle denoise), then force-align each scene's script for exact word and cue timing.
+
+After that the normal stages run: layouts and camera (the edited take plays continuously), graphics, captions, SFX mix with two-pass −14 LUFS normalisation, review stills, cover, MP4 and export validation. The original audio is the narration; nothing is synthesised.
+
+**Review the cuts.** `out/recording-edit.json` lists every cut with its reason (`retake`, `filler`, `pause`, `before script`, `after script`), source time range and the words removed, plus scene boundaries. The console prints the non-pause cuts. If a cut is wrong, re-record that line, or set `removeRetakes: false` for a pause-only edit that keeps all speech. Captions show the script text, not the raw transcript.
+
+**Recording tips.** Say the script in order in one take; restarting a line is fine. For split scenes, frame chest-up with headroom (see [FACECAM.md](../../shorts/neetcode-150/part-01/FACECAM.md)). The take fails early if a scene is missing or fewer than 75% of script words are heard.
 
 ## 3. Plan and preview
 

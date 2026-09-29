@@ -13,7 +13,7 @@ try {
     if (positionals.length > 1 || !['plan', 'doctor', 'preview', 'build', 'cleanup'].includes(command)) throw new Error('Choose plan, doctor, preview, build or cleanup. Use --help for usage.');
     if (command !== 'cleanup' && (values.apply || values['include-review'])) throw new Error('--apply and --include-review are only valid with cleanup.');
     const workflow = await loadWorkflow(values.config ?? fileURLToPath(new URL('./default.json', import.meta.url)));
-    console.log(`Short video: ${workflow.episode.title} (${workflow.episode.slug})\nProject: ${workflow.project}\nNarration: ${workflow.config.provider}; duration budget: ${workflow.config.maxDurationSeconds}s`);
+    console.log(`Short video: ${workflow.episode.title} (${workflow.episode.slug})\nProject: ${workflow.project}\nNarration: ${workflow.config.provider}${workflow.recordingPath ? ` (${workflow.recordingPath})` : ''}; duration budget: ${workflow.config.maxDurationSeconds}s`);
     if (command === 'plan') {
       for (const [index, step] of createPlan(workflow, 'build').entries()) console.log(`${index + 1}. ${step.id}`);
       console.log(`Outputs: ${workflow.project}/out/${workflow.episode.slug}{.mp4,-cover.png}, out/qa/, out/shorts-workflow.json`);
