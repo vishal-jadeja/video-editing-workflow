@@ -5,14 +5,27 @@ The edit uses four layouts selected by cue words in `data/part-01.json` under `l
 | Section | Layout |
 | --- | --- |
 | Hook | Full-frame camera + array overlay; switches to graphics on “one hundred thousand” |
-| Problem | Full-frame camera intro; switches to a stacked split on “Given an array” |
+| Problem | Full-frame camera intro; switches to split (graphics top, camera bottom) on “Given an array” |
 | Brute force | Full motion graphics and exact code |
-| Better | Stacked camera/sorting animation; full graphics/code on “neighbours” |
+| Better | Split: sorting animation top, camera bottom; full graphics/code on “neighbours” |
 | One-liner | Full-frame camera + code overlay; full graphics on “always processes” |
-| Optimal | Stacked camera/set introduction; full graphics on “one number at a time” |
+| Optimal | Split: set introduction top, camera bottom; full graphics on “one number at a time” |
 | CTA | Full-frame camera + follow text |
 
-All layouts retain the persistent title after 3 seconds and synchronized captions. Split screens use a wide camera panel above full-width teaching elements. Full code demonstrations receive the whole graphics area so code isn't squeezed beside a face. Captions have a solid backing over footage for readability. The video still reserves the bottom 20% and rightmost 120px for platform UI.
+All layouts retain the persistent title after 3 seconds and synchronized captions. Full code demonstrations receive the whole graphics area so code isn't squeezed beside a face. Captions over footage use a soft glyph shadow, not a box. The video still reserves the bottom 20% and rightmost 120px for platform UI.
+
+### The four layouts
+
+Every moment of the video uses exactly one of these:
+
+| Mode | Geometry |
+| --- | --- |
+| `facecam` | Camera fills the whole 1080 × 1920 frame. Header and captions sit on top. |
+| `graphics` | Motion graphics fill the whole frame on the textured background. |
+| `split` | Motion graphics on the **top 55%** (y 0–1056, below the header); the camera runs **full width across the bottom 45%** (y 1056–1920, edge to edge, no border). Captions sit on the seam at y 990 so they never cover the face. |
+| `overlay` | Camera fills the frame; a scene-specific graphic sits on top of it. Only scenes with an overlay design (`hook`, `one`) accept it; any other scene fails at layout resolution. |
+
+The camera is never an inset box with graphics above and below it. The geometry lives in `LAYOUT` in `src/theme.ts`.
 
 ## Add your recording later
 
@@ -39,7 +52,7 @@ Edit `data/facecam.json`:
 }
 ```
 
-`sourceStartSeconds` skips a lead-in before the master edit begins. `objectPosition` sets the full-frame horizontal/vertical focal point; `splitObjectPosition` controls the wide split-screen crop independently. `zoom` can be 1…3. Both portrait and landscape recordings are cropped to fill the relevant panel. Keep your face centered above chest-level graphics. Inspect the split crop as well as the full-frame crop.
+`sourceStartSeconds` skips a lead-in before the master edit begins. `objectPosition` sets the full-frame horizontal/vertical focal point; `splitObjectPosition` controls the bottom split panel (1080 × 864) independently; a larger vertical percentage moves the face up the panel. Aim for eyes about a third of the way down the panel and the mouth above y 1536 (platform UI starts there). `zoom` can be 1…3. Both portrait and landscape recordings are cropped to fill the relevant panel. A close arm's-length selfie is too tight for split: at full width the face is taller than the panel, so record split scenes chest-up (or landscape) with headroom. Inspect the split crop as well as the full-frame crop.
 
 For separately recorded takes, specify source timing for that scene:
 

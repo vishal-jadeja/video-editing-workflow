@@ -2,7 +2,7 @@
 
 For the automated plan/preflight/preview/build commands, start with the [short-video workflow](../../../workflows/shorts/README.md). The commands below remain available for individual production steps.
 
-**Current export: face-cam edition.** Four cue-driven layouts combine full face cam, face cam with overlays, stacked split screens and full motion graphics. See [FACECAM.md](FACECAM.md) to add a recording, trim/crop it, use separate takes, or change the scene layouts. With no recording the camera uses silhouette placeholders. The preceding full-graphics export is preserved at `out/part-01-contains-duplicate-graphics-only.mp4`.
+**Current export: face-cam edition.** Four cue-driven layouts: full face cam, face cam with a scene-specific overlay, split (graphics on the top 55%, full-width face cam across the bottom 45%) and full motion graphics. See [FACECAM.md](FACECAM.md) to add a recording, trim/crop it, use separate takes, or change the scene layouts. With no recording the camera uses silhouette placeholders. The preceding full-graphics export is preserved at `out/part-01-contains-duplicate-graphics-only.mp4`.
 
 1080 × 1920, 30 fps, H.264 / AAC. Remotion + React + TypeScript. All important content stays at x=60…920 and y<1536. The only glow is the subtle top background radial. No element shadows, tinted badges, pills or icon assets.
 

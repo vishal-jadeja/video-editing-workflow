@@ -9,6 +9,13 @@ export const glyphShadow='0 0 .45em rgba(0,0,0,.55), 0 .03em .1em rgba(0,0,0,.6)
 export const mono='"JetBrains Mono", monospace';
 export const sans='"Inter", sans-serif';
 export const SAFE={left:60,width:860,right:920,bottom:1536};
+/** The four layouts. `split` = motion graphics on the top 55% (below the header), full-bleed face cam on the bottom 45%.
+ * The camera is never a boxed panel with graphics above and below it. */
+export const LAYOUT={
+  split:{camTop:1056,camHeight:864,graphicsShift:-370,captionTop:990},
+  captionTop:1370,
+  overlayScenes:['hook','one'] as string[],
+};
 export const clamp=(x:number)=>Math.max(0,Math.min(1,x));
 export const ease=(x:number)=>1-Math.pow(1-clamp(x),3);
 export const move=(t:number,start:number,duration=.24)=>ease((t-start)/duration);

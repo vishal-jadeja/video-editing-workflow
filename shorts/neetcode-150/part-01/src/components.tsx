@@ -31,7 +31,7 @@ export const ApproachHeader:React.FC<{scene:Scene}>=({scene})=><div style={{posi
 
 export const Tile:React.FC<{value:number|string;index?:number|string;size?:number;duplicate?:boolean;active?:boolean;style?:React.CSSProperties}>=({value,index,size=132,duplicate=false,active=false,style})=><div style={{position:'absolute',width:size,height:size,...style}}>
   <div style={{width:size,height:size,boxSizing:'border-box',background:duplicate?'#221A3A':C.panel,border:duplicate?`3px solid ${C.violet}`:active?`2px solid ${C.text}`:`1.5px solid ${C.line}`,display:'flex',alignItems:'center',justifyContent:'center',fontFamily:sans,fontSize:typeof value==='number'&&value>999?30:Math.round(size*.46),fontWeight:400,letterSpacing:'-.02em',fontVariantNumeric:'tabular-nums'}}>{value}</div>
-  {index!==undefined&&<div style={{textAlign:'center',fontFamily:mono,fontSize:21,color:C.muted,marginTop:12}}>{index}</div>}
+  {index!==undefined&&<div style={{textAlign:'center',fontFamily:mono,fontSize:21,color:C.muted,marginTop:12,textShadow:glyphShadow}}>{index}</div>}
 </div>;
 export const ArrayTiles:React.FC<{values:(number|string)[];top?:number;duplicate?:number[];active?:number[];opacity?:number[];size?:number}>=({values,top=555,duplicate=[],active=[],opacity=[],size=132})=>{
   const gap=20;const start=60+(860-values.length*size-(values.length-1)*gap)/2;
@@ -58,11 +58,11 @@ export function captionGroups(words:Word[]){
   return groups;
 }
 // Words land on their spoken onset (short rise) and never change colour; no karaoke highlight, no backdrop box.
-export const Captions:React.FC<{scene:Scene;t:number;backdrop?:boolean}>=({scene,t,backdrop=false})=>{
+export const Captions:React.FC<{scene:Scene;t:number;backdrop?:boolean;top?:number}>=({scene,t,backdrop=false,top=1370})=>{
   const groups=captionGroups(scene.words);
   const group=groups.find((g,i)=>t>=g[0].start&&t<(groups[i+1]?.[0].start??g.at(-1)!.end+.15));
   if(!group)return null;
-  return <div style={{position:'absolute',left:60,top:1370,width:860,minHeight:140,display:'flex',alignItems:'flex-start',justifyContent:'center',alignContent:'flex-start',gap:'0 17px',flexWrap:'wrap',fontSize:62,fontWeight:700,lineHeight:1.17,textAlign:'center',letterSpacing:'-.03em',textShadow:backdrop?glyphShadow:undefined}}>{group.map((w,i)=>{const p=i===0?1:move(t,w.start-.1,.13);return <span key={i} style={{display:'inline-block',opacity:p,transform:`translateY(${(1-p)*.2}em)`}}>{w.word}</span>;})}</div>;
+  return <div style={{position:'absolute',left:60,top,width:860,minHeight:140,display:'flex',alignItems:'flex-start',justifyContent:'center',alignContent:'flex-start',gap:'0 17px',flexWrap:'wrap',fontSize:62,fontWeight:700,lineHeight:1.17,textAlign:'center',letterSpacing:'-.03em',textShadow:backdrop?glyphShadow:undefined}}>{group.map((w,i)=>{const p=i===0?1:move(t,w.start-.1,.13);return <span key={i} style={{display:'inline-block',opacity:p,transform:`translateY(${(1-p)*.2}em)`}}>{w.word}</span>;})}</div>;
 };
 
 export const EndCard:React.FC<{t:number}>=({t})=><div style={{position:'absolute',left:60,top:440,width:860,textAlign:'center',opacity:move(t,0)}}>

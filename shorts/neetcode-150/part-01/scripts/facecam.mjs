@@ -5,11 +5,14 @@ import {fileURLToPath} from 'node:url';
 
 export function resolveLayouts(episode,timeline){
   const allowed=['facecam','overlay','split','graphics'];
+  // Keep in sync with LAYOUT.overlayScenes in src/theme.ts: overlay needs a scene-specific design.
+  const overlayScenes=['hook','one'];
   return timeline.scenes.flatMap(s=>{
     const beats=episode.layouts?.[s.id]||[{at:'start',mode:'graphics'}];
     if(beats[0]?.at!=='start')throw Error(`${s.id}: first layout must be at start`);
     const resolved=beats.map(b=>{
       if(!allowed.includes(b.mode))throw Error(`Unknown layout: ${b.mode}`);
+      if(b.mode==='overlay'&&!overlayScenes.includes(s.id))throw Error(`${s.id}: overlay layout has no design for this scene; use facecam, split or graphics`);
       const seconds=b.at==='start'?0:s.cues[b.at];
       if(!Number.isFinite(seconds))throw Error(`Unknown layout cue: ${s.id}.${b.at}`);
       return {scene:s.id,mode:b.mode,cue:b.at,localFrame:Math.round(seconds*30),startFrame:s.startFrame+Math.round(seconds*30)};

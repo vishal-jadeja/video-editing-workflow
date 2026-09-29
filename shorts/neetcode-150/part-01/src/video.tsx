@@ -4,7 +4,7 @@ import timeline from './generated/timeline.json';
 import episode from './generated/episode.json';
 import {Background,ProblemCard,Captions} from './components';
 import {EditorialScene,layoutAt} from './facecam';
-import {C,mono,sans,label,Scene} from './theme';
+import {C,mono,sans,label,LAYOUT,Scene} from './theme';
 
 const data=timeline as unknown as {ready:boolean;frames:number;part:number;title:string;scenes:Scene[]};
 const Fonts:React.FC=()=>{
@@ -13,7 +13,8 @@ const Fonts:React.FC=()=>{
    Promise.all(['inter','jetbrains'].map(name=>new Promise<void>((resolve,reject)=>{const link=document.createElement('link');link.rel='stylesheet';link.href=staticFile(`fonts/${name}.css`);link.onload=()=>resolve();link.onerror=reject;document.head.appendChild(link);}))).then(()=>Promise.all([document.fonts.load('900 50px Inter'),document.fonts.load('700 64px Inter'),document.fonts.load('400 30px "JetBrains Mono"')])).then(()=>continueRender(handle)).catch(cancelRender);
  },[handle]);return null;
 };
-const SceneCaptions:React.FC<{s:Scene}>=({s})=>{const f=useCurrentFrame();return <Captions scene={s} t={f/30} backdrop={layoutAt(s,f).mode!=='graphics'}/>;};
+// Split captions sit on the graphics/camera seam so they never cover the face.
+const SceneCaptions:React.FC<{s:Scene}>=({s})=>{const f=useCurrentFrame(),mode=layoutAt(s,f).mode;return <Captions scene={s} t={f/30} backdrop={mode!=='graphics'} top={mode==='split'?LAYOUT.split.captionTop:LAYOUT.captionTop}/>;};
 const Video:React.FC=()=>{
  if(!data.ready)throw Error('Generate and align narration before rendering the video. Cover is available independently.');
  return <AbsoluteFill style={{color:C.text,fontFamily:sans}}><Fonts/><Background/>
