@@ -49,7 +49,7 @@ npm run render
 
 The OpenAI mode uses `gpt-4o-mini-tts` and `cedar`, with calm conversational instructions. Override `OPENAI_VOICE` or `OPENAI_TTS_MODEL` if needed. Both providers use local Stable-ts / Whisper `base.en` forced alignment of the exact script, not estimated word spacing. This requires a one-time official Whisper model download (~139 MB), cached in `.cache/whisper` and hash-verified by Whisper. Keep TLS verification enabled; use your system's trusted CA configuration if Python needs it.
 
-Each cue in the data file is an exact spoken phrase. The build resolves that phrase to aligned word onset and fails on missing cues. Transitions last 160–300 ms. Captions contain small groups with the spoken word in violet. Content captions and scan progress keep the long explanations active. The brute-force large count is explicitly a **worst case** (4,999,950,000 comparisons at n=100,000); the demonstrated input returns after 3 comparisons. The optimal input returns after 2 checks.
+Each cue in the data file is an exact spoken phrase. The build resolves that phrase to aligned word onset and fails on missing cues. Transitions last 160–300 ms. Captions contain small groups; each word appears on its spoken onset, with no colour highlight. The look is print-editorial: paper-textured background with a faint 60/120 px grid, hairline tiles and rules, tracked mono labels, bold Inter headlines and no serif. Brand violet `#7B4DFF` marks only the duplicate/match (text uses the `#8F6BFF` tint); approach colours appear only as the label dot and the active code-line marker. Content captions and scan progress keep the long explanations active. The brute-force large count is explicitly a **worst case** (4,999,950,000 comparisons at n=100,000); the demonstrated input returns after 3 comparisons. The optimal input returns after 2 checks.
 
 ## Series reuse
 
@@ -57,7 +57,7 @@ Copy `data/part-01.json` to a new part file and edit problem metadata, arrays, e
 
 ## Assets and audio
 
-Place your photo at `assets/avatar.png` and run `node scripts/prepare.mjs`; without it the violet-ring placeholder remains. Fonts are fetched from Google Fonts once and cached locally. Code remains exact Python from the brief, with syntax colors and active-line highlighting.
+Place your photo at `assets/avatar.png` and run `node scripts/prepare.mjs`; without it the hairline-ring placeholder remains. Fonts are fetched from Google Fonts once and cached locally. Code remains exact Python from the brief, with syntax colors and active-line highlighting.
 
 SFX are original deterministic synthesis documented in `assets/sfx/CREDITS.md`. No downloaded music or sound samples are used. The mix normalizes voice first, layers effects quietly, then uses two-pass ffmpeg normalization and a measured stereo correction targeting -14 LUFS, with a -1.5 dBTP ceiling. `out/audio-loudness.json` stores first-pass measurements, `out/audio-final-loudness.json` stores the mixed WAV measurements, and `out/validation.json` stores final MP4 codec, dimensions, frame count, duration and encoded-audio measurements.
 

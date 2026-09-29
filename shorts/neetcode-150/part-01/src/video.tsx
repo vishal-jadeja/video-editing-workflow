@@ -4,7 +4,7 @@ import timeline from './generated/timeline.json';
 import episode from './generated/episode.json';
 import {Background,ProblemCard,Captions} from './components';
 import {EditorialScene,layoutAt} from './facecam';
-import {C,mono,sans,Scene} from './theme';
+import {C,mono,sans,label,Scene} from './theme';
 
 const data=timeline as unknown as {ready:boolean;frames:number;part:number;title:string;scenes:Scene[]};
 const Fonts:React.FC=()=>{
@@ -21,14 +21,16 @@ const Video:React.FC=()=>{
    {data.scenes.map(s=><Sequence key={s.id} from={s.startFrame} durationInFrames={s.frames}><EditorialScene s={s}/></Sequence>)}
    <ProblemCard part={data.part} title={data.title}/>
    {data.scenes.map(s=><Sequence key={`captions-${s.id}`} from={s.startFrame} durationInFrames={s.frames}><SceneCaptions s={s}/></Sequence>)}
-   <div style={{position:'absolute',left:60,top:1526,width:860,height:3,background:C.panel}}><div style={{background:C.violet,height:3,width:`${f/data.frames*100}%`}}/></div>
+   <div style={{position:'absolute',left:60,top:1527,width:860,height:2,background:C.line}}><div style={{background:C.violet,height:2,width:`${f/data.frames*100}%`}}/></div>
    <Audio src={staticFile('audio/mix.wav')}/>
  </AbsoluteFill>;
 };
 const Cover:React.FC=()=> <AbsoluteFill style={{color:C.text,fontFamily:sans}}><Fonts/><Background/>
-  <div style={{position:'absolute',left:80,top:220,fontFamily:mono,fontWeight:600,fontSize:184,letterSpacing:-12,color:C.violet}}>#{episode.part}</div>
-  <div style={{position:'absolute',left:80,top:664,width:820,fontSize:110,fontWeight:900,lineHeight:1.06,letterSpacing:-5}}>{episode.title.split(' ').map((word,i)=><React.Fragment key={i}>{i>0&&<br/>}{word}</React.Fragment>)}</div>
-  <div style={{position:'absolute',left:80,top:1020,fontSize:108,fontFamily:mono,color:C.green}}>O(n)</div>
-  <div style={{position:'absolute',left:80,top:1430,fontSize:27,fontWeight:700,letterSpacing:5,color:C.violet}}>NEETCODE 150</div>
+  <div style={{position:'absolute',left:60,top:230,width:960,display:'flex',justifyContent:'space-between',...label,fontSize:28}}><span>NeetCode 150</span><span style={{color:C.muted}}>Part {String(episode.part).padStart(2,'0')}</span></div>
+  <div style={{position:'absolute',left:60,top:290,width:960,height:1,background:C.line}}/>
+  <div style={{position:'absolute',left:54,top:620,width:960,fontSize:150,fontWeight:700,lineHeight:.95,letterSpacing:'-.05em'}}>{episode.title.split(' ').map((word,i)=><React.Fragment key={i}>{i>0&&<br/>}{word}</React.Fragment>)}</div>
+  <div style={{position:'absolute',left:60,top:1010,...label,fontSize:26,color:C.muted}}>{episode.difficulty} · Arrays &amp; Hashing</div>
+  <div style={{position:'absolute',left:60,top:1090,fontSize:120,fontFamily:mono,color:C.violetText,letterSpacing:'-.04em'}}>O(n)</div>
+  <div style={{position:'absolute',left:60,top:1430,...label,fontSize:26,color:C.muted}}>One problem at a time</div>
 </AbsoluteFill>;
 export const Root:React.FC=()=> <><Composition id="Part01" component={Video} width={1080} height={1920} fps={30} durationInFrames={data.frames||30}/><Composition id="Cover" component={Cover} width={1080} height={1920} fps={30} durationInFrames={1}/></>;
