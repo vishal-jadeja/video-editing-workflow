@@ -15,13 +15,11 @@ const Fonts:React.FC=()=>{
 };
 const SceneCaptions:React.FC<{s:Scene}>=({s})=>{const f=useCurrentFrame();return <Captions scene={s} t={f/30} backdrop={layoutAt(s,f).mode!=='graphics'}/>;};
 const Video:React.FC=()=>{
- const f=useCurrentFrame();
  if(!data.ready)throw Error('Generate and align narration before rendering the video. Cover is available independently.');
  return <AbsoluteFill style={{color:C.text,fontFamily:sans}}><Fonts/><Background/>
    {data.scenes.map(s=><Sequence key={s.id} from={s.startFrame} durationInFrames={s.frames}><EditorialScene s={s}/></Sequence>)}
    <ProblemCard part={data.part} title={data.title}/>
    {data.scenes.map(s=><Sequence key={`captions-${s.id}`} from={s.startFrame} durationInFrames={s.frames}><SceneCaptions s={s}/></Sequence>)}
-   <div style={{position:'absolute',left:60,top:1527,width:860,height:2,background:C.line}}><div style={{background:C.violet,height:2,width:`${f/data.frames*100}%`}}/></div>
    <Audio src={staticFile('audio/mix.wav')}/>
  </AbsoluteFill>;
 };
