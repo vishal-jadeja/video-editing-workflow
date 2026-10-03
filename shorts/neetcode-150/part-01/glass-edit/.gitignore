@@ -1,0 +1,7 @@
+# Generated audio and preview stills
+*.wav
+stills/
+# Footage, transcripts and renders when MEDIA_DIR points here
+*.mov
+*.mp4
+*.srt
